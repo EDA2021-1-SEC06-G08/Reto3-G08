@@ -13,6 +13,8 @@ Este directorio contiene todo el código de base que se entrega para el funciona
 
     |-- Utils: Funciones auxiliares para el funcionamiento de los TADs y estructuras de datos
 
+    Gabriel Villabon 202013898 g.villabon requerimiento 4
+    Natali Mercado 202012682  n.mercado requerimiento 3
 -Test
 Este directorio contiene las pruebas realizadas a los TADs, Estructuras de Datos y Algoritmos.
 
