@@ -34,10 +34,32 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
+# ====================
+#  Ruta a los archivos
+# ====================
+
+
+crimefile = 'user_track_hashtag_timestamp-small.csv'
+cont = None
+
+# ===============
+#  Menu principal
+# ===============
+
+
 def printMenu():
+    print("\n")
+    print("=======================================")
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("1. Inicializar Analizador")
+    print("2- Cargar información en el catálogo")
+    print("3- Caracterizar las reproducciones")
+    print("4- Encontrar musica para festejar")
+    print("5- Encontrar musica para estudiar")
+    print("6- Estudiar los generos musicales")
+    print("7- Indicar el genero musical mas escuchado en el tiempo")
+    print("0- Salir")
+    print("=======================================")
 
 catalog = None
 
@@ -47,11 +69,35 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
+
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+        print("\nInicializando...")
+        # cont es el controlador que se usara de aca en adelante
+        cont = controller.init()
 
     elif int(inputs[0]) == 2:
-        pass
+        print("\nCargando información de los archivos ....")
+        controller.loadData(cont, crimefile)
+        print('Videos cargados: ' + str(controller.videosSize(cont)))
+        print('Altura del arbol: ' + str(controller.indexHeight(cont)))
+        print('Elementos en el arbol: ' + str(controller.indexSize(cont)))
+        print('Menor Llave: ' + str(controller.minKey(cont)))
+        print('Mayor Llave: ' + str(controller.maxKey(cont)))
+
+    elif int(inputs[0]) == 3:
+        print("\nCargando información de los videos ....")
+
+    elif int(inputs[0]) == 4:
+        print("\nCargando información de los videos ....")
+
+    elif int(inputs[0]) == 5:
+        print("\nCargando información de los videos ....")
+
+    elif int(inputs[0]) == 6:
+        print("\nCargando información de los videos ....")
+
+    elif int(inputs[0]) == 7:
+        print("\nCargando información de los videos ....")
 
     else:
         sys.exit(0)

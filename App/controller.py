@@ -29,9 +29,73 @@ import csv
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
-# Inicialización del Catálogo de libros
+# ===========================
+# Inicializacion del catalogo
+# ===========================
 
-# Funciones para la carga de datos
+
+def init():
+    """
+    Llama la funcion de inicializacion  del modelo.
+    """
+    # catalog es utilizado para interactuar con el modelo
+    analyzer = model.newAnalyzer()
+    return analyzer
+
+# =================================================
+# Funciones para la carga de datos y almacenamiento
+# de datos en los modelos
+# =================================================
+
+def loadData(analyzer, videosfile):
+    """
+    Carga los datos de los archivos CSV en el modelo
+    """
+    videosfile = cf.data_dir + videosfile
+    input_file = csv.DictReader(open(videosfile, encoding="utf-8"),
+                                delimiter=",")
+    for video in input_file:
+        model.addVideo(analyzer, video)
+    return analyzer
+
+# ========================
+# Funciones para consultas
+# ========================
+
+
+def videosSize(analyzer):
+    """
+    Numero de crimenes leidos
+    """
+    return model.videosSize(analyzer)
+
+
+def indexHeight(analyzer):
+    """
+    Altura del indice (arbol)
+    """
+    return model.indexHeight(analyzer)
+
+
+def indexSize(analyzer):
+    """
+    Numero de nodos en el arbol
+    """
+    return model.indexSize(analyzer)
+
+
+def minKey(analyzer):
+    """
+    La menor llave del arbol
+    """
+    return model.minKey(analyzer)
+
+
+def maxKey(analyzer):
+    """
+    La mayor llave del arbol
+    """
+    return model.maxKey(analyzer)
 
 # Funciones de ordenamiento
 
