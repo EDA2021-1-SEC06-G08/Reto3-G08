@@ -34,29 +34,55 @@ El controlador se encarga de mediar entre la vista y el modelo.
 # ===========================
 
 
-def init():
+def initCatalog():
     """
     Llama la funcion de inicializacion  del modelo.
     """
     # catalog es utilizado para interactuar con el modelo
-    analyzer = model.newAnalyzer()
-    return analyzer
+    catalog = model.newCatalog()
+    return catalog
 
-# =================================================
-# Funciones para la carga de datos y almacenamiento
-# de datos en los modelos
-# =================================================
 
-def loadData(analyzer, videosfile):
+
+# ================================
+# Funciones para la carga de datos
+# ================================
+
+
+def loadData(catalog):
     """
     Carga los datos de los archivos CSV en el modelo
     """
-    videosfile = cf.data_dir + videosfile
-    input_file = csv.DictReader(open(videosfile, encoding="utf-8"),
-                                delimiter=",")
+    loadVideosInfo(catalog)
+    loadVideosAnalisis(catalog)
+    loadVideosEtiquetas(catalog)
+
+def loadVideosInfo(catalog):
+    """
+    """
+    videosfile = cf.data_dir + 'user_track_hashtag_timestamp-small.csv'
+    input_file = csv.DictReader(open(videosfile))
     for video in input_file:
-        model.addVideo(analyzer, video)
-    return analyzer
+        model.addVideoInfo(catalog, video)
+
+def loadVideosAnalisis(catalog):
+    """
+    """
+    videosfile = cf.data_dir + 'context_content_features-small.csv'
+    input_file = csv.DictReader(open(videosfile))
+    model.CrearLlaveContext(catalog)
+    for musica in input_file:
+        model.addVideoContext(catalog, musica)
+
+def loadVideosEtiquetas(catalog):
+    """
+    """
+    videofile = cf.data_dir + 'sentiment_values.csv'
+    input_file = csv.DictReader(open(videofile))
+    for video in input_file:
+        model.addVideoEtiquetas(catalog, video)
+
+
 
 # ========================
 # Funciones para consultas

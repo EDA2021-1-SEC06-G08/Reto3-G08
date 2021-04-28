@@ -27,7 +27,7 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.ADT import map as m
+from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -39,7 +39,7 @@ assert cf
 # ==============================
 
 
-def newAnalyzer():
+def newCatalog():
     """ 
     Inicializa el analizador
 
@@ -49,14 +49,19 @@ def newAnalyzer():
 
     Retorna el analizador inicializado.
     """
-    analyzer = {'videos': None,
-                'dateIndex': None
-                }
+    catalog = {'videosInfo': None,
+               'videosContext': None,
+               'videosEtiquetas': None,
+               'caraContenido': None}
 
-    analyzer['videos'] = lt.newList('SINGLE_LINKED', compareIds)
-    analyzer['dateIndex'] = om.newMap(omaptype='RBT',
-                                      comparefunction=compareDates)
-    return analyzer
+    catalog['videosInfo'] = lt.newList('SINGLE_LINKED', compareIds)
+    catalog['videosContext'] = lt.newList('SINGLE_LINKED', compareIds)
+    catalog['videosEtiquetas'] = lt.newList('SINGLE_LINKED', compareIds)
+    catalog['caraContenido'] = mp.newMap(30,
+                                            maptype='PROBING',
+                                            loadfactor=0.4)
+
+    return catalog
 
 
 
@@ -65,12 +70,123 @@ def newAnalyzer():
 # ==============================================
 
 
-def addVideo(analyzer, video):
+def addVideoInfo(catalog, video):
+    """
+    agrega un video a la lista de videos
+    """
+    lt.addLast(catalog['videosInfo'], video)
+ 
+
+def CrearLlaveContext(catalog):
     """
     """
-    lt.addLast(analyzer['videos'], video)
-    updateDateIndex(analyzer['dateIndex'], video)
-    return analyzer
+    Lista = ['instrumentalness' , 'liveness' , 'speechiness' , 'danceability' , 'valence' , 'loudness' , 'tempo' , 'acousticness' , 'energy']
+ 
+    for contenido in Lista:
+        mp.put(catalog['caraContenido'], contenido, om.newMap('RBT'))
+
+def addVideoContext(catalog, musica):
+    """
+    """
+    lt.addLast(catalog['videosContext'], musica)
+    musica = list(musica)
+    if musica[0] != 'instrumentalness':
+
+        #Instrumentalness
+        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'instrumentalness')
+        EstaKey = mp.contains(RBTinstrumeltaness, musica[0])
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(RBTinstrumeltaness, musica[0], ArtistList)
+        ListaArtista = om.get(RBTinstrumeltaness, musica[0])
+        lt.addLast(ListaArtista, musica[11])
+        om.put(RBTinstrumeltaness, musica[0], ListaArtista)
+        mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumeltaness)
+
+        #Liveness
+        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'liveness')
+        EstaKey = mp.contains(RBTinstrumeltaness, musica[1])
+
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(RBTinstrumeltaness, musica[1], ArtistList)
+        ListaArtista = om.get(RBTinstrumeltaness, musica[1])
+        lt.addLast(ListaArtista, musica[11])
+        om.put(RBTinstrumeltaness, musica[1], ListaArtista)
+        mp.put(catalog['caraContenido'], 'liveness', RBTinstrumeltaness)
+
+        #Speechiness
+        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'speechiness')
+        EstaKey = mp.contains(RBTinstrumeltaness, musica[2])
+
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(RBTinstrumeltaness, musica[2], ArtistList)
+        ListaArtista = om.get(RBTinstrumeltaness, musica[2])
+        lt.addLast(ListaArtista, musica[11])
+        om.put(RBTinstrumeltaness, musica[2], ListaArtista)
+        mp.put(catalog['caraContenido'], 'speechiness', RBTinstrumeltaness)
+ 
+        #Danceability
+        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'danceability')
+        EstaKey = mp.contains(RBTinstrumeltaness, musica[3])
+
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(RBTinstrumeltaness, musica[3], ArtistList)
+        ListaArtista = om.get(RBTinstrumeltaness, musica[3])
+        lt.addLast(ListaArtista, musica[11])
+        om.put(RBTinstrumeltaness, musica[3], ListaArtista)
+        mp.put(catalog['caraContenido'], 'danceability', RBTinstrumeltaness)
+
+        #Valence
+        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'valence')
+        EstaKey = mp.contains(RBTinstrumeltaness, musica[4])
+
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(RBTinstrumeltaness, musica[4], ArtistList)
+        ListaArtista = om.get(RBTinstrumeltaness, musica[4])
+        lt.addLast(ListaArtista, musica[11])
+        om.put(RBTinstrumeltaness, musica[4], ListaArtista)
+        mp.put(catalog['caraContenido'], 'valence', RBTinstrumeltaness)
+
+        #Acousticness
+        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'Acousticness')
+        EstaKey = mp.contains(RBTinstrumeltaness, musica[7])
+
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(RBTinstrumeltaness, musica[7], ArtistList)
+        ListaArtista = om.get(RBTinstrumeltaness, musica[7])
+        lt.addLast(ListaArtista, musica[11])
+        om.put(RBTinstrumeltaness, musica[7], ListaArtista)
+        mp.put(catalog['caraContenido'], 'Acousticness', RBTinstrumeltaness)
+
+        #Energy
+        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'Energy')
+        EstaKey = mp.contains(RBTinstrumeltaness, musica[8])
+
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(RBTinstrumeltaness, musica[8], ArtistList)
+        ListaArtista = om.get(RBTinstrumeltaness, musica[8])
+        lt.addLast(ListaArtista, musica[11])
+        om.put(RBTinstrumeltaness, musica[8], ListaArtista)
+        mp.put(catalog['caraContenido'], 'energy', RBTinstrumeltaness)
+
+
+def addVideoEtiquetas(catalog, video):
+    """
+    """
+    lt.addLast(catalog['videosEtiquetas'], video)
+
+
+def addMapCaraContenido(catalog, video):
+    """
+    """
+    
+
 
 def updateDateIndex(map, video):
     """
