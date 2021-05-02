@@ -53,9 +53,7 @@ def loadData(catalog):
     """
     Carga los datos de los archivos CSV en el modelo
     """
-    loadVideosInfo(catalog)
     loadVideosContext(catalog)
-    loadVideosEtiquetas(catalog)
 
 def loadVideosInfo(catalog):
     """
