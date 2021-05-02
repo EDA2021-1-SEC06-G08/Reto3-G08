@@ -80,7 +80,8 @@ def addVideoInfo(catalog, video):
 def CrearLlaveContext(catalog):
     """
     """
-    Lista = ['instrumentalness' , 'liveness' , 'speechiness' , 'danceability' , 'valence' , 'loudness' , 'tempo' , 'acousticness' , 'energy']
+    Lista = ['instrumentalness' , 'liveness' , 'speechiness' , 'danceability' , 'valence' ,
+             'loudness' , 'tempo' , 'acousticness' , 'energy']
  
     for contenido in Lista:
         mp.put(catalog['caraContenido'], contenido, om.newMap('RBT'))
@@ -90,11 +91,14 @@ def addVideoContext(catalog, musica):
     """
     lt.addLast(catalog['videosContext'], musica)
     musica = list(musica)
+    
     if musica[0] != 'instrumentalness':
 
         #Instrumentalness
-        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'instrumentalness')
+        RBTinstrumeltanessEntry = mp.get(catalog['caraContenido'], 'instrumentalness')
+        RBTinstrumeltaness = me.getValue(RBTinstrumeltanessEntry)
         EstaKey = mp.contains(RBTinstrumeltaness, musica[0])
+
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
             om.put(RBTinstrumeltaness, musica[0], ArtistList)
@@ -104,76 +108,83 @@ def addVideoContext(catalog, musica):
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumeltaness)
 
         #Liveness
-        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'liveness')
-        EstaKey = mp.contains(RBTinstrumeltaness, musica[1])
+        RBTlivenessEntry = mp.get(catalog['caraContenido'], 'liveness')
+        RBTliveness = me.getValue(RBTlivenessEntry)
+        EstaKey = mp.contains(RBTliveness, musica[1])
 
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
-            om.put(RBTinstrumeltaness, musica[1], ArtistList)
-        ListaArtista = om.get(RBTinstrumeltaness, musica[1])
+            om.put(RBTliveness, musica[1], ArtistList)
+        ListaArtista = om.get(RBTliveness musica[1])
         lt.addLast(ListaArtista, musica[11])
-        om.put(RBTinstrumeltaness, musica[1], ListaArtista)
-        mp.put(catalog['caraContenido'], 'liveness', RBTinstrumeltaness)
+        om.put(RBTliveness, musica[1], ListaArtista)
+        mp.put(catalog['caraContenido'], 'liveness', RBTliveness)
 
         #Speechiness
-        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'speechiness')
-        EstaKey = mp.contains(RBTinstrumeltaness, musica[2])
+        RBTspeechinessEntry = mp.get(catalog['caraContenido'], 'speechiness')
+        RBTspeechiness = me.getValue(RBTspeechinessEntry)
+        EstaKey = mp.contains(RBTspeechiness, musica[2])
 
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
-            om.put(RBTinstrumeltaness, musica[2], ArtistList)
-        ListaArtista = om.get(RBTinstrumeltaness, musica[2])
+            om.put(RBTspeechiness, musica[2], ArtistList)
+        ListaArtista = om.get(RBTspeechiness, musica[2])
         lt.addLast(ListaArtista, musica[11])
-        om.put(RBTinstrumeltaness, musica[2], ListaArtista)
-        mp.put(catalog['caraContenido'], 'speechiness', RBTinstrumeltaness)
+        om.put(RBTspeechiness, musica[2], ListaArtista)
+        mp.put(catalog['caraContenido'], 'speechiness', RBTspeechiness)
  
         #Danceability
-        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'danceability')
-        EstaKey = mp.contains(RBTinstrumeltaness, musica[3])
+        RBTdanceabilityEntry = mp.get(catalog['caraContenido'], 'danceability')
+        RBTdanceability = me.getValue(RBTdanceabilityEntry)
+        EstaKey = mp.contains(RBTdanceability, musica[3])
 
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
-            om.put(RBTinstrumeltaness, musica[3], ArtistList)
-        ListaArtista = om.get(RBTinstrumeltaness, musica[3])
+            om.put(RBTdanceability, musica[3], ArtistList)
+        ListaArtista = om.get(RBTdanceability, musica[3])
         lt.addLast(ListaArtista, musica[11])
-        om.put(RBTinstrumeltaness, musica[3], ListaArtista)
-        mp.put(catalog['caraContenido'], 'danceability', RBTinstrumeltaness)
+        om.put(RBTdanceability, musica[3], ListaArtista)
+        mp.put(catalog['caraContenido'], 'danceability', RBTdanceability)
 
         #Valence
-        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'valence')
-        EstaKey = mp.contains(RBTinstrumeltaness, musica[4])
+        RBTvalenceEntry = mp.get(catalog['caraContenido'], 'valence')
+        RBTvalence = me.getValue(RBTvalenceEntry)
+        EstaKey = mp.contains(RBTvalence, musica[4])
 
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
-            om.put(RBTinstrumeltaness, musica[4], ArtistList)
-        ListaArtista = om.get(RBTinstrumeltaness, musica[4])
+            om.put(RBTvalence, musica[4], ArtistList)
+        ListaArtista = om.get(RBTvalence, musica[4])
         lt.addLast(ListaArtista, musica[11])
-        om.put(RBTinstrumeltaness, musica[4], ListaArtista)
-        mp.put(catalog['caraContenido'], 'valence', RBTinstrumeltaness)
+        om.put(RBTvalence, musica[4], ListaArtista)
+        mp.put(catalog['caraContenido'], 'valence', RBTvalence)
 
         #Acousticness
-        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'Acousticness')
-        EstaKey = mp.contains(RBTinstrumeltaness, musica[7])
+        RBTacousticnessEntry = mp.get(catalog['caraContenido'], 'Acousticness')
+        RBTacousticness = me.getValue(RBTacousticnessEntry)
+        EstaKey = mp.contains(RBTacousticness, musica[7])
 
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
-            om.put(RBTinstrumeltaness, musica[7], ArtistList)
-        ListaArtista = om.get(RBTinstrumeltaness, musica[7])
+            om.put(RBTacousticness, musica[7], ArtistList)
+        ListaArtista = om.get(RBTacousticness, musica[7])
         lt.addLast(ListaArtista, musica[11])
-        om.put(RBTinstrumeltaness, musica[7], ListaArtista)
-        mp.put(catalog['caraContenido'], 'Acousticness', RBTinstrumeltaness)
+        om.put(RBTacousticness, musica[7], ListaArtista)
+        mp.put(catalog['caraContenido'], 'Acousticness', RBTacousticness)
 
         #Energy
-        RBTinstrumeltaness = mp.get(catalog['caraContenido'], 'Energy')
-        EstaKey = mp.contains(RBTinstrumeltaness, musica[8])
+        RBTenergyEntry = mp.get(catalog['caraContenido'], 'Energy')
+        RBTenergy = me.getValue(RBTenergyEntry)
+        EstaKey = mp.contains(RBTenergy, musica[8])
 
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
-            om.put(RBTinstrumeltaness, musica[8], ArtistList)
-        ListaArtista = om.get(RBTinstrumeltaness, musica[8])
+            om.put(RBTenergy, musica[8], ArtistList)
+        ListaArtista = om.get(RBTenergy, musica[8])
         lt.addLast(ListaArtista, musica[11])
-        om.put(RBTinstrumeltaness, musica[8], ListaArtista)
-        mp.put(catalog['caraContenido'], 'energy', RBTinstrumeltaness)
+        om.put(RBTenergy, musica[8], ListaArtista)
+        mp.put(catalog['caraContenido'], 'energy', RBTenergy)
+        
 
 
 def addVideoEtiquetas(catalog, video):
