@@ -54,7 +54,7 @@ def loadData(catalog):
     Carga los datos de los archivos CSV en el modelo
     """
     loadVideosInfo(catalog)
-    loadVideosAnalisis(catalog)
+    loadVideosContext(catalog)
     loadVideosEtiquetas(catalog)
 
 def loadVideosInfo(catalog):
@@ -65,7 +65,7 @@ def loadVideosInfo(catalog):
     for video in input_file:
         model.addVideoInfo(catalog, video)
 
-def loadVideosAnalisis(catalog):
+def loadVideosContext(catalog):
     """
     """
     videosfile = cf.data_dir + 'context_content_features-small.csv'
