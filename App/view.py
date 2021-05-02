@@ -79,6 +79,11 @@ while True:
         print('Mayor Llave: ' + str(controller.maxKey(cont)))
         """
     elif int(inputs[0]) == 2:
+        caracteristica = input('Inserte la característica: ')
+        valor_min = input('Inserte el valor mínimo: ')
+        valor_max = input('Inserte el valor máximo: ')
+        respuesta = controller.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
+        print('Total of reproduction: ',respuesta)
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 3:
         print("\nCargando información de los videos ....")

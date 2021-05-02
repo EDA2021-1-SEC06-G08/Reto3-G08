@@ -368,7 +368,7 @@ def values(map, keylo, keyhi):
     Raises:
         Exception
     """
-    if (map['type'] == 'BST'):
-        return bst.values(map, keylo, keyhi)
-    else:
+    if (map['type'] == 'RBT'):
         return rbt.values(map, keylo, keyhi)
+    else:
+        return bst.values(map, keylo, keyhi)

@@ -250,9 +250,15 @@ def newOffenseEntry(offensegrp, crime):
     ofentry['lstoffenses'] = lt.newList('SINGLELINKED', compareOffenses)
     return ofentry
 
-
-
-
+#requerimiento 1 
+def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
+    Lista = []
+    EstaCarac = mp.contains(catalog['caraContenido'],caracteristica)
+    if EstaCarac:
+        entry = mp.get(catalog['caraContenido'], caracteristica)
+        value = me.getValue(entry)
+        lista = om.values(value, valor_min, valor_max)
+    return lista['size']
 # Funciones para creacion de datos
 
 # ==============================
