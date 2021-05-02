@@ -110,19 +110,6 @@ def addVideoContext(catalog, musica):
         om.put(RBTinstrumeltaness, musica['instrumentalness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumeltaness)
 
-<<<<<<< HEAD
-        #Liveness
-        RBTlivenessEntry = mp.get(catalog['caraContenido'], 'liveness')
-        RBTliveness = me.getValue(RBTlivenessEntry)
-        EstaKey = mp.contains(RBTliveness, musica[1])
-
-        if not(EstaKey):
-            ArtistList = lt.newList('SINGLE_LINKED')
-            om.put(RBTliveness, musica[1], ArtistList)
-        ListaArtista = om.get(RBTliveness, musica[1])
-        lt.addLast(ListaArtista, musica[11])
-        om.put(RBTliveness, musica[1], ListaArtista)
-=======
     #Liveness
     RBTlivenessEntry = mp.get(catalog['caraContenido'], 'liveness')
     RBTliveness = me.getValue(RBTlivenessEntry)
@@ -141,7 +128,6 @@ def addVideoContext(catalog, musica):
         ListaArtista = me.getValue(ListaArtistaEntry)
         lt.addLast(ListaArtista, musica['artist_id'])
         om.put(RBTliveness, musica['liveness'], ListaArtista)
->>>>>>> c3638a91d79178cb37bb9da5ec19b44c45b7737b
         mp.put(catalog['caraContenido'], 'liveness', RBTliveness)
 
     #Speechiness
