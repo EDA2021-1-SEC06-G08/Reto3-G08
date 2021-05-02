@@ -230,7 +230,6 @@ def addVideoContext(catalog, musica):
         om.put(RBTenergy, musica['energy'], ListaArtista)
         mp.put(catalog['caraContenido'], 'energy', RBTenergy)
 
-    print(catalog['caraContenido'])
 
 def addVideoEtiquetas(catalog, video):
     """
