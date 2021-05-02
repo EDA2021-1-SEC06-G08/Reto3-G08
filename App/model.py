@@ -115,7 +115,7 @@ def addVideoContext(catalog, musica):
         if not(EstaKey):
             ArtistList = lt.newList('SINGLE_LINKED')
             om.put(RBTliveness, musica[1], ArtistList)
-        ListaArtista = om.get(RBTliveness musica[1])
+        ListaArtista = om.get(RBTliveness, musica[1])
         lt.addLast(ListaArtista, musica[11])
         om.put(RBTliveness, musica[1], ListaArtista)
         mp.put(catalog['caraContenido'], 'liveness', RBTliveness)
@@ -264,6 +264,7 @@ def newOffenseEntry(offensegrp, crime):
 #requerimiento 1 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     Lista = []
+    arbol = None
     EstaCarac = mp.contains(catalog['caraContenido'],caracteristica)
     if EstaCarac:
         entry = mp.get(catalog['caraContenido'], caracteristica)
