@@ -30,6 +30,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
+from DISClib.DataStructures import listiterator as it
 from DISClib.Algorithms.Sorting import shellsort as sa
 import datetime
 assert cf
@@ -305,21 +306,34 @@ def newOffenseEntry(offensegrp, crime):
     ofentry['lstoffenses'] = lt.newList('SINGLELINKED', compareOffenses)
     return ofentry
 
-#requerimiento 1 
-def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
-    Lista = []
-    arbol = None
-    EstaCarac = mp.contains(catalog['caraContenido'],caracteristica)
-    if EstaCarac:
-        entry = mp.get(catalog['caraContenido'], caracteristica)
-        arbol = me.getValue(entry)
-        Lista = om.keys(arbol, valor_min, valor_max)
-    return arbol
+
+
 # Funciones para creacion de datos
 
 # ==============================
 # Funciones de consulta
 # ==============================
+
+#requerimiento 1 
+def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
+    artistasRepetidos = lt.newList('ARRAY_LIST')
+    artistasUnicos = set()
+    entry = mp.get(catalog['caraContenido'], caracteristica)
+    arbol = me.getValue(entry)
+    lista_llaves = om.keys(arbol, valor_min, valor_max)
+    lista_artistas = om.values(arbol, valor_min, valor_max)
+    iterador = it.newIterator(lista_artistas)
+    while it.hasNext(iterador):  
+      artist_id = it.next(iterador)
+      for elemento in artist_id['elements']:
+          if elemento not in artistasRepetidos:
+              lt.addLast(artistasRepetidos, elemento)
+    iterador2 = it.newIterator(artistasRepetidos)
+    while it.hasNext(iterador2):  
+      artist_id2 = it.next(iterador2)
+      if artist_id2 not in artistasUnicos:
+          artistasUnicos.add(artist_id2)
+    return lt.size(artistasRepetidos), len(artistasUnicos)
 
 
 def videosSize(analyzer):
