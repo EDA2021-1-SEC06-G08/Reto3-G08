@@ -363,6 +363,7 @@ def newOffenseEntry(offensegrp, crime):
 #requerimiento 1 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     artistasRepetidos = lt.newList('ARRAY_LIST')
+    artistasRepetidos2 = lt.newList('ARRAY_LIST')
     artistasUnicos = set()
     entry = mp.get(catalog['caraContenido'], caracteristica)
     arbol = me.getValue(entry)
@@ -370,17 +371,34 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     lista_artistas = om.values(arbol, valor_min, valor_max)
     iterador = it.newIterator(lista_artistas)
     while it.hasNext(iterador):  
-      artist_id = it.next(iterador)
-      for elemento in artist_id['elements']:
-          if elemento not in artistasRepetidos:
-              lt.addLast(artistasRepetidos, elemento)
-    iterador2 = it.newIterator(artistasRepetidos)
-    while it.hasNext(iterador2):  
-      artist_id2 = it.next(iterador2)
-      if artist_id2 not in artistasUnicos:
-          artistasUnicos.add(artist_id2)
-    return lt.size(artistasRepetidos), len(artistasUnicos)
-
+        datos = it.next(iterador)
+        elementos = datos['elements'] #elementos es una lista que tengo que recorrer 
+        iterador_lista = it.newIterator(elementos)
+        while it.hasNext(iterador_lista):
+            dato = it.next(iterador_lista)
+            print(dato)
+        #for musica in elementos:
+        #    print(musica)
+        #print('---------------------------------------')
+        #print(datos['elements'][1]['artist_id'])
+        #if datos['elements'][0]['artist_id'] not in artistasRepetidos:
+            #lt.addLast(artistasRepetidos, datos['elements'][0]['artist_id'])
+    #print(artistasRepetidos)
+    #iterador2 = it.newIterator(artistasRepetidos)
+    #while it.hasNext(iterador2):
+        #datos2 = it.next(iterador2)
+        #if datos2 not in artistasRepetidos2:
+            #lt.addLast(artistasRepetidos2, datos2)
+    #print(artistasRepetidos2)
+          #if elemento not in artistasRepetidos:
+              #lt.addLast(artistasRepetidos, elemento)
+    #iterador2 = it.newIterator(artistasRepetidos)
+    #while it.hasNext(iterador2):  
+      #artist_id2 = it.next(iterador2)
+      #if artist_id2 not in artistasUnicos:
+          #artistasUnicos.add(artist_id2)
+    #return lt.size(artistasRepetidos), len(artistasUnicos)
+    
 
 def videosSize(analyzer):
     """
