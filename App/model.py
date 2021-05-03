@@ -90,6 +90,7 @@ def addVideoContext(catalog, musica):
     """
     """
     lt.addLast(catalog['videosContext'], musica)
+
     #Instrumentalness
     RBTinstrumeltanessEntry = mp.get(catalog['caraContenido'], 'instrumentalness')
     RBTinstrumeltaness = me.getValue(RBTinstrumeltanessEntry)        
@@ -100,13 +101,13 @@ def addVideoContext(catalog, musica):
         om.put(RBTinstrumeltaness, musica['instrumentalness'], ArtistList)
         ListaArtistaEntry = om.get(RBTinstrumeltaness, musica['instrumentalness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTinstrumeltaness, musica['instrumentalness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumeltaness)
     else:
         ListaArtistaEntry = om.get(RBTinstrumeltaness, musica['instrumentalness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTinstrumeltaness, musica['instrumentalness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumeltaness)
 
@@ -120,13 +121,13 @@ def addVideoContext(catalog, musica):
         om.put(RBTliveness, musica['liveness'], ArtistList)
         ListaArtistaEntry = om.get(RBTliveness, musica['liveness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTliveness, musica['liveness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'liveness', RBTliveness)
     else:
         ListaArtistaEntry = om.get(RBTliveness, musica['liveness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTliveness, musica['liveness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'liveness', RBTliveness)
 
@@ -140,13 +141,13 @@ def addVideoContext(catalog, musica):
         om.put(RBTspeechiness, musica['speechiness'], ArtistList)
         ListaArtistaEntry = om.get(RBTspeechiness, musica['speechiness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTspeechiness, musica['speechiness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'speechiness', RBTspeechiness)
     else:
         ListaArtistaEntry = om.get(RBTspeechiness, musica['speechiness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTspeechiness, musica['speechiness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'speechiness', RBTspeechiness)
  
@@ -160,13 +161,13 @@ def addVideoContext(catalog, musica):
         om.put(RBTdanceability, musica['danceability'], ArtistList)
         ListaArtistaEntry = om.get(RBTdanceability, musica['danceability'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTdanceability, musica['danceability'], ListaArtista)
         mp.put(catalog['caraContenido'], 'danceability', RBTdanceability)
     else:
         ListaArtistaEntry = om.get(RBTdanceability, musica['danceability'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTdanceability, musica['danceability'], ListaArtista)
         mp.put(catalog['caraContenido'], 'danceability', RBTdanceability)
 
@@ -180,13 +181,13 @@ def addVideoContext(catalog, musica):
         om.put(RBTvalence, musica['valence'], ArtistList)
         ListaArtistaEntry = om.get(RBTvalence, musica['valence'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTvalence, musica['valence'], ListaArtista)
         mp.put(catalog['caraContenido'], 'valence', RBTvalence)
     else:
         ListaArtistaEntry = om.get(RBTvalence, musica['valence'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTvalence, musica['valence'], ListaArtista)
         mp.put(catalog['caraContenido'], 'valence', RBTvalence)
 
@@ -200,13 +201,13 @@ def addVideoContext(catalog, musica):
         om.put(RBTacousticness, musica['acousticness'], ArtistList)
         ListaArtistaEntry = om.get(RBTacousticness, musica['acousticness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTacousticness, musica['acousticness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'acousticness', RBTacousticness)
     else:
         ListaArtistaEntry = om.get(RBTacousticness, musica['acousticness'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTacousticness, musica['acousticness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'acousticness', RBTacousticness)
 
@@ -220,13 +221,13 @@ def addVideoContext(catalog, musica):
         om.put(RBTenergy, musica['energy'], ArtistList)
         ListaArtistaEntry = om.get(RBTenergy, musica['energy'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTenergy, musica['energy'], ListaArtista)
         mp.put(catalog['caraContenido'], 'energy', RBTenergy)
     else:
         ListaArtistaEntry = om.get(RBTenergy, musica['energy'])
         ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica['artist_id'])
+        lt.addLast(ListaArtista, musica)
         om.put(RBTenergy, musica['energy'], ListaArtista)
         mp.put(catalog['caraContenido'], 'energy', RBTenergy)
 
