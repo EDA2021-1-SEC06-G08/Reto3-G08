@@ -91,11 +91,10 @@ def addVideoContext(catalog, musica):
     """
     """
     lt.addLast(catalog['videosContext'], musica)
-    #print(catalog['videosContext'])
     #Instrumentalness
     RBTinstrumentalnessEntry = mp.get(catalog['caraContenido'], 'instrumentalness')
     RBTinstrumentalness = me.getValue(RBTinstrumentalnessEntry)    
-    print(RBTinstrumentalness)    
+    #print(RBTinstrumentalness)    
     EstaKey = om.contains(RBTinstrumentalness, musica['instrumentalness'])
 
     if not(EstaKey):
@@ -107,7 +106,6 @@ def addVideoContext(catalog, musica):
         om.put(RBTinstrumentalness, musica['instrumentalness'], ListaArtista)
         listaEntry = om.get(RBTinstrumentalness, musica['instrumentalness'])
         lista = me.getValue(listaEntry)
-        #print(lista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumentalness)
     else:
         ListaArtistaEntry = om.get(RBTinstrumentalness, musica['instrumentalness'])
@@ -115,7 +113,7 @@ def addVideoContext(catalog, musica):
         lt.addLast(ListaArtista, musica)
         om.put(RBTinstrumentalness, musica['instrumentalness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumentalness)
-        #print(ListaArtista)
+       
 
     #Liveness
     RBTlivenessEntry = mp.get(catalog['caraContenido'], 'liveness')
@@ -363,7 +361,6 @@ def newOffenseEntry(offensegrp, crime):
 #requerimiento 1 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     artistasRepetidos = lt.newList('ARRAY_LIST')
-    artistasRepetidos2 = lt.newList('ARRAY_LIST')
     artistasUnicos = set()
     entry = mp.get(catalog['caraContenido'], caracteristica)
     arbol = me.getValue(entry)
@@ -372,32 +369,21 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     iterador = it.newIterator(lista_artistas)
     while it.hasNext(iterador):  
         datos = it.next(iterador)
-        elementos = datos['elements'] #elementos es una lista que tengo que recorrer 
+        elementos = datos #elementos es una lista que tengo que recorrer 
         iterador_lista = it.newIterator(elementos)
         while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista)
-            print(dato)
-        #for musica in elementos:
-        #    print(musica)
-        #print('---------------------------------------')
-        #print(datos['elements'][1]['artist_id'])
-        #if datos['elements'][0]['artist_id'] not in artistasRepetidos:
-            #lt.addLast(artistasRepetidos, datos['elements'][0]['artist_id'])
-    #print(artistasRepetidos)
-    #iterador2 = it.newIterator(artistasRepetidos)
-    #while it.hasNext(iterador2):
-        #datos2 = it.next(iterador2)
-        #if datos2 not in artistasRepetidos2:
-            #lt.addLast(artistasRepetidos2, datos2)
-    #print(artistasRepetidos2)
-          #if elemento not in artistasRepetidos:
-              #lt.addLast(artistasRepetidos, elemento)
-    #iterador2 = it.newIterator(artistasRepetidos)
-    #while it.hasNext(iterador2):  
-      #artist_id2 = it.next(iterador2)
-      #if artist_id2 not in artistasUnicos:
-          #artistasUnicos.add(artist_id2)
-    #return lt.size(artistasRepetidos), len(artistasUnicos)
+            dato = it.next(iterador_lista) #iterar sobre esta lista por artist_id
+            artistas_id = dato['artist_id']
+            if artistas_id not in artistasRepetidos:
+               lt.addLast(artistasRepetidos, artistas_id)
+    iterador_artistas_unicos = it.newIterator(artistasRepetidos)
+    while it.hasNext(iterador_artistas_unicos):
+        artist_id_no_repetido = it.next(iterador_artistas_unicos)
+        if artist_id_no_repetido not in artistasUnicos:
+            artistasUnicos.add(artist_id_no_repetido)
+    return lt.size(artistasRepetidos), len(artistasUnicos)
+        
+    
     
 
 def videosSize(analyzer):
