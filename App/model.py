@@ -49,15 +49,15 @@ def newCatalog():
 
     Retorna el analizador inicializado.
     """
-    catalog = {'videosInfo': None,
-               'videosContext': None,
-               'videosEtiquetas': None,
-               'caraContenido': None}
+    catalog = {'videosContext': None,
+               'caraContenido': None,
+               'musicalGenero': None}
 
-    catalog['videosInfo'] = lt.newList('SINGLE_LINKED', compareIds)
     catalog['videosContext'] = lt.newList('SINGLE_LINKED', compareIds)
-    catalog['videosEtiquetas'] = lt.newList('SINGLE_LINKED', compareIds)
     catalog['caraContenido'] = mp.newMap(30,
+                                            maptype='PROBING',
+                                            loadfactor=0.4)
+    catalog['musicaGenero'] = mp.newMap(30,
                                             maptype='PROBING',
                                             loadfactor=0.4)
 
@@ -70,14 +70,12 @@ def newCatalog():
 # ==============================================
 
 
-def addVideoInfo(catalog, video):
+def addMusicaContext(catalog, musica):
     """
-    agrega un video a la lista de videos
     """
-    lt.addLast(catalog['videosInfo'], video)
- 
-
-def CrearLlaveContext(catalog):
+    lt.addLast(catalog['videosContext'], musica)
+    
+def CrearLlaveMusicaContext(catalog):
     """
     """
     Lista = ['instrumentalness' , 'liveness' , 'speechiness' , 'danceability' , 'valence' ,
@@ -86,15 +84,13 @@ def CrearLlaveContext(catalog):
     for contenido in Lista:
         mp.put(catalog['caraContenido'], contenido, om.newMap('RBT'))
 
-def addVideoContext(catalog, musica):
+def addMapMusicaContext(catalog, musica):
     """
     """
-    lt.addLast(catalog['videosContext'], musica)
-    #print(catalog['videosContext'])
+
     #Instrumentalness
     RBTinstrumentalnessEntry = mp.get(catalog['caraContenido'], 'instrumentalness')
-    RBTinstrumentalness = me.getValue(RBTinstrumentalnessEntry)    
-    print(RBTinstrumentalness)    
+    RBTinstrumentalness = me.getValue(RBTinstrumentalnessEntry)       
     EstaKey = om.contains(RBTinstrumentalness, musica['instrumentalness'])
 
     if not(EstaKey):
@@ -106,7 +102,6 @@ def addVideoContext(catalog, musica):
         om.put(RBTinstrumentalness, musica['instrumentalness'], ListaArtista)
         listaEntry = om.get(RBTinstrumentalness, musica['instrumentalness'])
         lista = me.getValue(listaEntry)
-        #print(lista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumentalness)
     else:
         ListaArtistaEntry = om.get(RBTinstrumentalness, musica['instrumentalness'])
@@ -114,7 +109,6 @@ def addVideoContext(catalog, musica):
         lt.addLast(ListaArtista, musica)
         om.put(RBTinstrumentalness, musica['instrumentalness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumentalness)
-        #print(ListaArtista)
 
     #Liveness
     RBTlivenessEntry = mp.get(catalog['caraContenido'], 'liveness')
@@ -276,17 +270,201 @@ def addVideoContext(catalog, musica):
         om.put(RBTloudness, musica['loudness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'loudness', RBTloudness)
 
-
-def addVideoEtiquetas(catalog, video):
+def CrearLlaveMusicaGenero(catalog):
     """
     """
-    lt.addLast(catalog['videosEtiquetas'], video)
-
-
-def addMapCaraContenido(catalog, video):
-    """
-    """
+    Lista = ['Reggae' , 'Down-tempo' , 'Chill-out' , 'Hip-hop' , 'Jazz and Funk' , 'Pop' , 
+             'R&B' , 'Rock' , 'Metal']
     
+    for genero in Lista:
+        mp.put(catalog['musicaGenero'], genero, om.newMap('RBT'))
+
+def addMapMusicaGenero(catalog, musica):
+    """
+    """
+    #Reggae
+    RBTreggaeEntry = mp.get(catalog['musicaGenero'], 'Reggae')
+    RBTreggae = me.getValue(RBTreggaeEntry)        
+    EstaKey = om.contains(RBTreggae, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 60 and musica['tempo'] <= 90):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTreggae, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTreggae, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTreggae, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Reggae', RBTreggae)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTreggae, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTreggae, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Reggae', RBTreggae)
+    
+    #Down-tempo
+    RBTdown_tempoEntry = mp.get(catalog['musicaGenero'], 'Down-tempo')
+    RBTdown_tempo = me.getValue(RBTdown_tempoEntry)        
+    EstaKey = om.contains(RBTdown_tempo, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 70 and musica['tempo'] <= 100):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTdown_tempo, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTdown_tempo, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Down-tempo', RBTdown_tempo)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTdown_tempo, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Down-tempo', RBTdown_tempo)
+    
+    #Chill-out
+    RBTchill_outEntry = mp.get(catalog['musicaGenero'], 'Chill-out')
+    RBTchill_out = me.getValue(RBTchill_outEntry)        
+    EstaKey = om.contains(RBTchill_out, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 90 and musica['tempo'] <= 120):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTchill_out, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTchill_out, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTchill_out, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Chill-out', RBTchill_out)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTchill_out, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTchill_out, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Chill-out', RBTchill_out)
+
+    #Hip-hop
+    RBThip_hopEntry = mp.get(catalog['musicaGenero'], 'Hip-hop')
+    RBThip_hop = me.getValue(RBThip_hopEntry)        
+    EstaKey = om.contains(RBThip_hop, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 85 and musica['tempo'] <= 115):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBThip_hop, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBThip_hop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBThip_hop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Hip-hop', RBThip_hop)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBThip_hop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBThip_hop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Hip-hop', RBThip_hop)
+    
+    #Jazz and Funk 
+    RBTjazzandfunkEntry = mp.get(catalog['musicaGenero'], 'Jazz and Funk')
+    RBTjazzandfunk = me.getValue(RBTjazzandfunkEntry)        
+    EstaKey = om.contains(RBTjazzandfunk, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 120 and musica['tempo'] <= 125):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTjazzandfunk, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTjazzandfunk, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTjazzandfunk, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Jazz and Funk', RBTjazzandfunk)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTjazzandfunk, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTjazzandfunk, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Jazz and Funk', RBTjazzandfunk)
+    
+    #Pop
+    RBTpopEntry = mp.get(catalog['musicaGenero'], 'Pop')
+    RBTpop = me.getValue(RBTpopEntry)        
+    EstaKey = om.contains(RBTpop, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 100 and musica['tempo'] <= 130):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTpop, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTpop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTpop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Pop', RBTpop)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTpop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTpop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Pop', RBTpop)
+    
+    #R&B
+    RBTrandbEntry = mp.get(catalog['musicaGenero'], 'R&B')
+    RBTrandb = me.getValue(RBTrandbEntry)        
+    EstaKey = om.contains(RBTrandb, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 60 and musica['tempo'] <= 80):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTrandb, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTrandb, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrandb, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'R&B', RBTrandb)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTrandb, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrandb, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'R&B', RBTrandb)
+
+    #Rock
+    RBTrockEntry = mp.get(catalog['musicaGenero'], 'Rock')
+    RBTrock = me.getValue(RBTrockEntry)        
+    EstaKey = om.contains(RBTrock, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 110 and musica['tempo'] <= 140):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTrock, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTrock, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrock, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Rock', RBTrock)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTrock, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrock, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Rock', RBTrock)
+
+    #Metal
+    RBTmetalEntry = mp.get(catalog['musicaGenero'], 'Metal')
+    RBTmetal = me.getValue(RBTmetalEntry)        
+    EstaKey = om.contains(RBTmetal, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 110 and musica['tempo'] <= 140):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTmetal, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTmetal, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTmetal, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Rock', RBTmetal)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTmetal, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTmetal, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Metal', RBTmetal)
+    
+
+
+
 
 
 def updateDateIndex(map, video):
