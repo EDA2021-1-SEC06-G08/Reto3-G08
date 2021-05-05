@@ -43,7 +43,6 @@ def initCatalog():
     return catalog
 
 
-
 # ================================
 # Funciones para la carga de datos
 # ================================
@@ -72,7 +71,8 @@ def loadVideosContext(catalog):
     model.CrearLlaveMusicaGenero(catalog)
     for musica in input_file:
         model.addMapMusicaContext(catalog, musica)
-        model.addMusicaContext(catalog, musica)
+        model.addMapMusicaGenero(catalog, musica)
+        model.addMapMusicaFechas(catalog, musica)
 
 def loadVideosEtiquetas(catalog):
     """
