@@ -67,11 +67,12 @@ def loadVideosContext(catalog):
     """
     """
     videosfile = cf.data_dir + 'context_content_features-small.csv'
-    input_file = csv.DictReader(open(videosfile,encoding= 'utf-8'))
-    model.CrearLlaveContext(catalog)
+    input_file = csv.DictReader(open(videosfile))
+    model.CrearLlaveMusicaContext(catalog)
+    model.CrearLlaveMusicaGenero(catalog)
     for musica in input_file:
-        model.addVideoContext(catalog, musica)
-    
+        model.addMapMusicaContext(catalog, musica)
+        model.addMusicaContext(catalog, musica)
 
 def loadVideosEtiquetas(catalog):
     """
