@@ -479,7 +479,7 @@ def addMapMusicaFechas(catalog, musica):
         ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['create_at'])
         ListaArtista = me.getValue(ListaArtistaEntry)
         lt.addLast(ListaArtista, musica)
-        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)
+        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtistaa)
 
 
 # ==============================
