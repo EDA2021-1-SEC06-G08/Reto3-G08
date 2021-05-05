@@ -50,10 +50,10 @@ def newCatalog():
 
     Retorna el analizador inicializado.
     """
-    catalog = {'videosInfo': None,
-               'videosContext': None,
-               'videosEtiquetas': None,
-               'caraContenido': None}
+    catalog = {'videosContext': None,
+               'caraContenido': None,
+               'musicalGenero': None,
+               'fechaMusica': None}
 
     catalog['videosInfo'] = lt.newList('SINGLE_LINKED', compareIds)
     catalog['videosContext'] = lt.newList('SINGLE_LINKED', compareIds)
@@ -61,6 +61,10 @@ def newCatalog():
     catalog['caraContenido'] = mp.newMap(30,
                                             maptype='PROBING',
                                             loadfactor=0.4)
+    catalog['musicaGenero'] = mp.newMap(30,
+                                            maptype='PROBING',
+                                            loadfactor=0.4)
+    catalog['fechaMusica'] = om.newMap('RBT')
 
     return catalog
 
@@ -279,164 +283,203 @@ def addVideoContext(catalog, musica):
 def addVideoEtiquetas(catalog, video):
     """
     """
-    lt.addLast(catalog['videosEtiquetas'], video)
+    #Reggae
+    RBTreggaeEntry = mp.get(catalog['musicaGenero'], 'Reggae')
+    RBTreggae = me.getValue(RBTreggaeEntry)        
+    EstaKey = om.contains(RBTreggae, musica['tempo'])
 
+    if not(EstaKey) and (musica['tempo'] >= 60 and musica['tempo'] <= 90):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTreggae, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTreggae, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTreggae, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Reggae', RBTreggae)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTreggae, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTreggae, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Reggae', RBTreggae)
+    
+    #Down-tempo
+    RBTdown_tempoEntry = mp.get(catalog['musicaGenero'], 'Down-tempo')
+    RBTdown_tempo = me.getValue(RBTdown_tempoEntry)        
+    EstaKey = om.contains(RBTdown_tempo, musica['tempo'])
 
-def addMapCaraContenido(catalog, video):
-    """
-    """
+    if not(EstaKey) and (musica['tempo'] >= 70 and musica['tempo'] <= 100):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTdown_tempo, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTdown_tempo, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Down-tempo', RBTdown_tempo)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTdown_tempo, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Down-tempo', RBTdown_tempo)
+    
+    #Chill-out
+    RBTchill_outEntry = mp.get(catalog['musicaGenero'], 'Chill-out')
+    RBTchill_out = me.getValue(RBTchill_outEntry)        
+    EstaKey = om.contains(RBTchill_out, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 90 and musica['tempo'] <= 120):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTchill_out, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTchill_out, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTchill_out, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Chill-out', RBTchill_out)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTchill_out, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTchill_out, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Chill-out', RBTchill_out)
+
+    #Hip-hop
+    RBThip_hopEntry = mp.get(catalog['musicaGenero'], 'Hip-hop')
+    RBThip_hop = me.getValue(RBThip_hopEntry)        
+    EstaKey = om.contains(RBThip_hop, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 85 and musica['tempo'] <= 115):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBThip_hop, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBThip_hop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBThip_hop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Hip-hop', RBThip_hop)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBThip_hop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBThip_hop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Hip-hop', RBThip_hop)
+    
+    #Jazz and Funk 
+    RBTjazzandfunkEntry = mp.get(catalog['musicaGenero'], 'Jazz and Funk')
+    RBTjazzandfunk = me.getValue(RBTjazzandfunkEntry)        
+    EstaKey = om.contains(RBTjazzandfunk, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 120 and musica['tempo'] <= 125):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTjazzandfunk, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTjazzandfunk, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTjazzandfunk, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Jazz and Funk', RBTjazzandfunk)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTjazzandfunk, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTjazzandfunk, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Jazz and Funk', RBTjazzandfunk)
+    
+    #Pop
+    RBTpopEntry = mp.get(catalog['musicaGenero'], 'Pop')
+    RBTpop = me.getValue(RBTpopEntry)        
+    EstaKey = om.contains(RBTpop, musica['tempo'])
+
+    if not(EstaKey) and (musica['tempo'] >= 100 and musica['tempo'] <= 130):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTpop, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTpop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTpop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Pop', RBTpop)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTpop, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTpop, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Pop', RBTpop)
+    
+    #R&B
+    RBTrandbEntry = mp.get(catalog['musicaGenero'], 'R&B')
+    RBTrandb = me.getValue(RBTrandbEntry)   
+
+    EstaKey = om.contains(RBTrandb, musica['tempo'])
+    if not(EstaKey) and (musica['tempo'] >= 60 and musica['tempo'] <= 80):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTrandb, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTrandb, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrandb, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'R&B', RBTrandb)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTrandb, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrandb, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'R&B', RBTrandb)
+
+    #Rock
+    RBTrockEntry = mp.get(catalog['musicaGenero'], 'Rock')
+    RBTrock = me.getValue(RBTrockEntry)  
+
+    EstaKey = om.contains(RBTrock, musica['tempo'])
+    if not(EstaKey) and (musica['tempo'] >= 110 and musica['tempo'] <= 140):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTrock, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTrock, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrock, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Rock', RBTrock)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTrock, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTrock, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Rock', RBTrock)
+
+    #Metal
+    RBTmetalEntry = mp.get(catalog['musicaGenero'], 'Metal')
+    RBTmetal = me.getValue(RBTmetalEntry)   
+
+    EstaKey = om.contains(RBTmetal, musica['tempo'])
+    if not(EstaKey) and (musica['tempo'] >= 110 and musica['tempo'] <= 140):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(RBTmetal, musica['tempo'], ArtistList)
+        ListaArtistaEntry = om.get(RBTmetal, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTmetal, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Rock', RBTmetal)
+    elif EstaKey:
+        ListaArtistaEntry = om.get(RBTmetal, musica['tempo'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(RBTmetal, musica['tempo'], ListaArtista)
+        mp.put(catalog['musicaGenero'], 'Metal', RBTmetal)
     
 
+def addMapMusicaFechas(catalog, musica):
 
-def updateDateIndex(map, video):
-    """
-    Se toma la fecha del video y se busca si ya existe en el arbol
-    dicha fecha.  Si es asi, se adiciona a su lista de video
-    y se actualiza el indice de tipos de video.
+    EstaKey = om.contains(catalog['fechaMusica'], musica['create_at'])
+    if not(EstaKey):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(catalog['fechaMusica'], musica['create_at'], ArtistList)
+        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['create_at'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)
 
-    Si no se encuentra creado un nodo para esa fecha en el arbol
-    se crea y se actualiza el indice de tipos de videos
-    """
-    occurreddate = video['created_at']
-    videodate = datetime.datetime.strptime(occurreddate, '%Y-%m-%d %H:%M:%S')
-    entry = om.get(map, videodate.date())
-    if entry is None:
-        datentry = newDataEntry(video)
-        om.put(map, videodate.date(), datentry)
     else:
-        datentry = me.getValue(entry)
-    addDateIndex(datentry, video)
-    return map
-
-def addDateIndex(datentry, video):
-    """
-    Actualiza un indice de tipo de videos.  Este indice tiene una lista
-    de videos y una tabla de hash cuya llave es el tipo de video y
-    el valor es una lista con los videos de dicho tipo en la fecha que
-    se está consultando (dada por el nodo del arbol)
-    """
-    lst = datentry['lstvideos']
-    lt.addLast(lst, video)
-    offenseIndex = datentry['offenseIndex']
-    offentry = m.get(offenseIndex, video['OFFENSE_CODE_GROUP'])
-    if (offentry is None):
-        entry = newOffenseEntry(video['OFFENSE_CODE_GROUP'], video)
-        lt.addLast(entry['lstoffenses'], video)
-        m.put(offenseIndex, video['OFFENSE_CODE_GROUP'], entry)
-    else:
-        entry = me.getValue(offentry)
-        lt.addLast(entry['lstoffenses'], video)
-    return datentry
-
-def newDataEntry(video):
-    """
-    Crea una entrada en el indice por fechas, es decir en el arbol
-    binario.
-    """
-    entry = {'offenseIndex': None, 'lstvideos': None}
-    entry['offenseIndex'] = m.newMap(numelements=30,
-                                     maptype='PROBING',
-                                     comparefunction=compareOffenses)
-    entry['lstvideos'] = lt.newList('SINGLE_LINKED', compareDates)
-    return entry
-
-def newOffenseEntry(offensegrp, crime):
-    """
-    Crea una entrada en el indice por tipo de crimen, es decir en
-    la tabla de hash, que se encuentra en cada nodo del arbol.
-    """
-    ofentry = {'offense': None, 'lstoffenses': None}
-    ofentry['offense'] = offensegrp
-    ofentry['lstoffenses'] = lt.newList('SINGLELINKED', compareOffenses)
-    return ofentry
-
-
-
-# Funciones para creacion de datos
-
-# ==============================
-# Funciones de consulta
-# ==============================
-
-#requerimiento 1 
-def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
-    artistasRepetidos = lt.newList('ARRAY_LIST')
-    artistasUnicos = set()
-    entry = mp.get(catalog['caraContenido'], caracteristica)
-    arbol = me.getValue(entry)
-    lista_llaves = om.keys(arbol, valor_min, valor_max)
-    lista_artistas = om.values(arbol, valor_min, valor_max)
-    iterador = it.newIterator(lista_artistas)
-    while it.hasNext(iterador):  
-        datos = it.next(iterador)
-        elementos = datos #elementos es una lista que tengo que recorrer 
-        iterador_lista = it.newIterator(elementos)
-        while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista) #iterar sobre esta lista por artist_id
-            artistas_id = dato['artist_id']
-            if artistas_id not in artistasRepetidos:
-               lt.addLast(artistasRepetidos, artistas_id)
-    iterador_artistas_unicos = it.newIterator(artistasRepetidos)
-    while it.hasNext(iterador_artistas_unicos):
-        artist_id_no_repetido = it.next(iterador_artistas_unicos)
-        if artist_id_no_repetido not in artistasUnicos:
-            artistasUnicos.add(artist_id_no_repetido)
-    return lt.size(artistasRepetidos), len(artistasUnicos)
-        
-    
-#requerimiento 2 
-def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
-    artistasUnicos = set()
-    entry1_energy = mp.get(catalog['caraContenido'], 'energy')
-    arbol_energy = me.getValue(entry1_energy)
-    lista_valuesEnergy = om.values(arbol_energy, valor_minEnergy, valor_maxEnergy)
-    entry2_danceability = mp.get(catalog['caraContenido'], 'danceability')
-    arbol_danceability = me.getValue(entry2_danceability)
-    lista_valuesDanceability = om.values(arbol_danceability,valor_minDanceability, valor_maxDanceability)
-    iterador_energy = it.newIterator(lista_valuesEnergy)
-    while  it.hasNext(iterador_energy):
-        datos = it.next(iterador_energy)
-        elementos = datos 
-        iterador_lista = it.newIterator(elementos)
-        while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista)
-            artistas_id = dato['artist_id']
-            if artistas_id not in artistas_unicos:
-                artistasUnicos.add(artistas_id)
-    return len(artistasUnicos)
-
-    
-
-def videosSize(analyzer):
-    """
-    Número de videos
-    """
-    return lt.size(analyzer['videos'])
-
-def indexHeight(analyzer):
-    """
-    Altura del arbol
-    """
-    return om.height(analyzer['dateIndex'])
-
-def indexSize(analyzer):
-    """
-    Numero de elementos en el indice
-    """
-    return om.size(analyzer['dateIndex'])
-
-def minKey(analyzer):
-    """
-    Llave mas pequena
-    """
-    return om.minKey(analyzer['dateIndex'])
-
-def maxKey(analyzer):
-    """
-    Llave mas grande
-    """
-    return om.maxKey(analyzer['dateIndex'])
-
+        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['create_at'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)
 
 
 # ==============================
@@ -454,28 +497,3 @@ def compareIds(id1, id2):
         return 1
     else:
         return -1
-
-def compareDates(date1, date2):
-    """
-    Compara dos fechas
-    """
-    if (date1 == date2):
-        return 0
-    elif (date1 > date2):
-        return 1
-    else:
-        return -1
-
-def compareOffenses(offense1, offense2):
-    """
-    Compara dos tipos de videos
-    """
-    offense = me.getKey(offense2)
-    if (offense1 == offense):
-        return 0
-    elif (offense1 > offense):
-        return 1
-    else:
-        return -1
-
-
