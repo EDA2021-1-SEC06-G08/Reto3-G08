@@ -71,8 +71,8 @@ def loadVideosContext(catalog):
     model.CrearLlaveContext(catalog)
     model.CrearLlaveGenero(catalog)
     for musica in input_file:
-        model.addMapMusicaContext(catalog, musica)
-        model.addMusicaContext(catalog, musica)
+        model.addVideoContext(catalog, musica)
+        model.addVideoEtiquetasContext(catalog, musica)
 
 def loadVideosEtiquetas(catalog):
     """
