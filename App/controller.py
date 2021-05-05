@@ -72,7 +72,7 @@ def loadVideosContext(catalog):
     model.CrearLlaveGenero(catalog)
     for musica in input_file:
         model.addVideoContext(catalog, musica)
-        model.addVideoEtiquetasContext(catalog, musica)
+        model.addVideoEtiquetas(catalog, musica)
 
 def loadVideosEtiquetas(catalog):
     """
