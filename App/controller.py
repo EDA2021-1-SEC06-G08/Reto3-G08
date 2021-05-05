@@ -59,7 +59,7 @@ def loadVideosInfo(catalog):
     """
     """
     videosfile = cf.data_dir + 'user_track_hashtag_timestamp-small.csv'
-    input_file = csv.DictReader(open(videosfile,encoding= 'utf-8'))
+    input_file = csv.DictReader(open(videosfile))
     for video in input_file:
         model.addVideoInfo(catalog, video)
 
@@ -68,34 +68,23 @@ def loadVideosContext(catalog):
     """
     videosfile = cf.data_dir + 'context_content_features-small.csv'
     input_file = csv.DictReader(open(videosfile))
-    model.CrearLlaveContext(catalog)
-    model.CrearLlaveGenero(catalog)
+    model.CrearLlaveMusicaContext(catalog)
+    model.CrearLlaveMusicaGenero(catalog)
     for musica in input_file:
-        model.addVideoContext(catalog, musica)
-        model.addVideoEtiquetas(catalog, musica)
+        model.addMapMusicaContext(catalog, musica)
+        model.addMusicaContext(catalog, musica)
 
 def loadVideosEtiquetas(catalog):
     """
     """
     videofile = cf.data_dir + 'sentiment_values.csv'
-    input_file = csv.DictReader(open(videofile,encoding= 'utf-8'))
+    input_file = csv.DictReader(open(videofile))
     for video in input_file:
         model.addVideoEtiquetas(catalog, video)
 
 
-def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
-    return model.musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
 
-
-#requerimiento 1
-def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
-    return model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
-
-
-#requerimiento 2
-
-
-
+# ========================
 # Funciones para consultas
 # ========================
 
