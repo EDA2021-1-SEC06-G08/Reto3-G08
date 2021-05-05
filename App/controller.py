@@ -81,11 +81,20 @@ def loadVideosEtiquetas(catalog):
     for video in input_file:
         model.addVideoEtiquetas(catalog, video)
 
+
+def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
+    return model.musica(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
+
+
 #requerimiento 1
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     return model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
 
-# ========================
+
+#requerimiento 2
+
+
+
 # Funciones para consultas
 # ========================
 
