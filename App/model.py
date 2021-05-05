@@ -51,7 +51,8 @@ def newCatalog():
     """
     catalog = {'videosContext': None,
                'caraContenido': None,
-               'musicalGenero': None}
+               'musicalGenero': None,
+               'fechaMusica': None}
 
     catalog['videosContext'] = lt.newList('SINGLE_LINKED', compareIds)
     catalog['caraContenido'] = mp.newMap(30,
@@ -60,6 +61,7 @@ def newCatalog():
     catalog['musicaGenero'] = mp.newMap(30,
                                             maptype='PROBING',
                                             loadfactor=0.4)
+    catalog['fechaMusica'] = om.newMap('RBT')
 
     return catalog
 
@@ -404,9 +406,9 @@ def addMapMusicaGenero(catalog, musica):
     
     #R&B
     RBTrandbEntry = mp.get(catalog['musicaGenero'], 'R&B')
-    RBTrandb = me.getValue(RBTrandbEntry)        
-    EstaKey = om.contains(RBTrandb, musica['tempo'])
+    RBTrandb = me.getValue(RBTrandbEntry)   
 
+    EstaKey = om.contains(RBTrandb, musica['tempo'])
     if not(EstaKey) and (musica['tempo'] >= 60 and musica['tempo'] <= 80):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTrandb, musica['tempo'], ArtistList)
@@ -424,9 +426,9 @@ def addMapMusicaGenero(catalog, musica):
 
     #Rock
     RBTrockEntry = mp.get(catalog['musicaGenero'], 'Rock')
-    RBTrock = me.getValue(RBTrockEntry)        
-    EstaKey = om.contains(RBTrock, musica['tempo'])
+    RBTrock = me.getValue(RBTrockEntry)  
 
+    EstaKey = om.contains(RBTrock, musica['tempo'])
     if not(EstaKey) and (musica['tempo'] >= 110 and musica['tempo'] <= 140):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTrock, musica['tempo'], ArtistList)
@@ -444,9 +446,9 @@ def addMapMusicaGenero(catalog, musica):
 
     #Metal
     RBTmetalEntry = mp.get(catalog['musicaGenero'], 'Metal')
-    RBTmetal = me.getValue(RBTmetalEntry)        
-    EstaKey = om.contains(RBTmetal, musica['tempo'])
+    RBTmetal = me.getValue(RBTmetalEntry)   
 
+    EstaKey = om.contains(RBTmetal, musica['tempo'])
     if not(EstaKey) and (musica['tempo'] >= 110 and musica['tempo'] <= 140):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTmetal, musica['tempo'], ArtistList)
@@ -463,112 +465,22 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Metal', RBTmetal)
     
 
+def addMapMusicaFechas(catalog, musica):
 
+    EstaKey = om.contains(catalog['fechaMusica'], musica['create_at'])
+    if not(EstaKey):
+        ArtistList = lt.newList('SINGLE_LINKED')
+        om.put(catalog['fechaMusica'], musica['create_at'], ArtistList)
+        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['create_at'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)
 
-
-
-def updateDateIndex(map, video):
-    """
-    Se toma la fecha del video y se busca si ya existe en el arbol
-    dicha fecha.  Si es asi, se adiciona a su lista de video
-    y se actualiza el indice de tipos de video.
-
-    Si no se encuentra creado un nodo para esa fecha en el arbol
-    se crea y se actualiza el indice de tipos de videos
-    """
-    occurreddate = video['created_at']
-    videodate = datetime.datetime.strptime(occurreddate, '%Y-%m-%d %H:%M:%S')
-    entry = om.get(map, videodate.date())
-    if entry is None:
-        datentry = newDataEntry(video)
-        om.put(map, videodate.date(), datentry)
     else:
-        datentry = me.getValue(entry)
-    addDateIndex(datentry, video)
-    return map
-
-def addDateIndex(datentry, video):
-    """
-    Actualiza un indice de tipo de videos.  Este indice tiene una lista
-    de videos y una tabla de hash cuya llave es el tipo de video y
-    el valor es una lista con los videos de dicho tipo en la fecha que
-    se está consultando (dada por el nodo del arbol)
-    """
-    lst = datentry['lstvideos']
-    lt.addLast(lst, video)
-    offenseIndex = datentry['offenseIndex']
-    offentry = m.get(offenseIndex, video['OFFENSE_CODE_GROUP'])
-    if (offentry is None):
-        entry = newOffenseEntry(video['OFFENSE_CODE_GROUP'], video)
-        lt.addLast(entry['lstoffenses'], video)
-        m.put(offenseIndex, video['OFFENSE_CODE_GROUP'], entry)
-    else:
-        entry = me.getValue(offentry)
-        lt.addLast(entry['lstoffenses'], video)
-    return datentry
-
-def newDataEntry(video):
-    """
-    Crea una entrada en el indice por fechas, es decir en el arbol
-    binario.
-    """
-    entry = {'offenseIndex': None, 'lstvideos': None}
-    entry['offenseIndex'] = m.newMap(numelements=30,
-                                     maptype='PROBING',
-                                     comparefunction=compareOffenses)
-    entry['lstvideos'] = lt.newList('SINGLE_LINKED', compareDates)
-    return entry
-
-def newOffenseEntry(offensegrp, crime):
-    """
-    Crea una entrada en el indice por tipo de crimen, es decir en
-    la tabla de hash, que se encuentra en cada nodo del arbol.
-    """
-    ofentry = {'offense': None, 'lstoffenses': None}
-    ofentry['offense'] = offensegrp
-    ofentry['lstoffenses'] = lt.newList('SINGLELINKED', compareOffenses)
-    return ofentry
-
-
-
-
-# Funciones para creacion de datos
-
-# ==============================
-# Funciones de consulta
-# ==============================
-
-
-def videosSize(analyzer):
-    """
-    Número de videos
-    """
-    return lt.size(analyzer['videos'])
-
-def indexHeight(analyzer):
-    """
-    Altura del arbol
-    """
-    return om.height(analyzer['dateIndex'])
-
-def indexSize(analyzer):
-    """
-    Numero de elementos en el indice
-    """
-    return om.size(analyzer['dateIndex'])
-
-def minKey(analyzer):
-    """
-    Llave mas pequena
-    """
-    return om.minKey(analyzer['dateIndex'])
-
-def maxKey(analyzer):
-    """
-    Llave mas grande
-    """
-    return om.maxKey(analyzer['dateIndex'])
-
+        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['create_at'])
+        ListaArtista = me.getValue(ListaArtistaEntry)
+        lt.addLast(ListaArtista, musica)
+        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)
 
 
 # ==============================
@@ -586,28 +498,3 @@ def compareIds(id1, id2):
         return 1
     else:
         return -1
-
-def compareDates(date1, date2):
-    """
-    Compara dos fechas
-    """
-    if (date1 == date2):
-        return 0
-    elif (date1 > date2):
-        return 1
-    else:
-        return -1
-
-def compareOffenses(offense1, offense2):
-    """
-    Compara dos tipos de videos
-    """
-    offense = me.getKey(offense2)
-    if (offense1 == offense):
-        return 0
-    elif (offense1 > offense):
-        return 1
-    else:
-        return -1
-
-
