@@ -69,7 +69,7 @@ def loadVideosContext(catalog):
     videosfile = cf.data_dir + 'context_content_features-small.csv'
     input_file = csv.DictReader(open(videosfile))
     model.CrearLlaveContext(catalog)
-    model.CrearLlaveGenero(catalog)
+    #model.CrearLlaveGenero(catalog)
     for musica in input_file:
         model.addMapMusicaContext(catalog, musica)
         model.addMusicaContext(catalog, musica)
