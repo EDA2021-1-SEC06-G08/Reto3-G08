@@ -30,7 +30,6 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
-from DISClib.DataStructures import listiterator as it
 from DISClib.Algorithms.Sorting import shellsort as sa
 import datetime
 assert cf
@@ -55,9 +54,7 @@ def newCatalog():
                'musicalGenero': None,
                'fechaMusica': None}
 
-    catalog['videosInfo'] = lt.newList('SINGLE_LINKED', compareIds)
     catalog['videosContext'] = lt.newList('SINGLE_LINKED', compareIds)
-    catalog['videosEtiquetas'] = lt.newList('SINGLE_LINKED', compareIds)
     catalog['caraContenido'] = mp.newMap(30,
                                             maptype='PROBING',
                                             loadfactor=0.4)
@@ -75,14 +72,12 @@ def newCatalog():
 # ==============================================
 
 
-def addVideoInfo(catalog, video):
+def addMusicaContext(catalog, musica):
     """
-    agrega un video a la lista de videos
     """
-    lt.addLast(catalog['videosInfo'], video)
- 
-
-def CrearLlaveContext(catalog):
+    lt.addLast(catalog['videosContext'], musica)
+    
+def CrearLlaveMusicaContext(catalog):
     """
     """
     Lista = ['instrumentalness' , 'liveness' , 'speechiness' , 'danceability' , 'valence' ,
@@ -91,14 +86,13 @@ def CrearLlaveContext(catalog):
     for contenido in Lista:
         mp.put(catalog['caraContenido'], contenido, om.newMap('RBT'))
 
-def addVideoContext(catalog, musica):
+def addMapMusicaContext(catalog, musica):
     """
     """
-    lt.addLast(catalog['videosContext'], musica)
+
     #Instrumentalness
     RBTinstrumentalnessEntry = mp.get(catalog['caraContenido'], 'instrumentalness')
-    RBTinstrumentalness = me.getValue(RBTinstrumentalnessEntry)    
-    #print(RBTinstrumentalness)    
+    RBTinstrumentalness = me.getValue(RBTinstrumentalnessEntry)       
     EstaKey = om.contains(RBTinstrumentalness, musica['instrumentalness'])
 
     if not(EstaKey):
@@ -117,7 +111,6 @@ def addVideoContext(catalog, musica):
         lt.addLast(ListaArtista, musica)
         om.put(RBTinstrumentalness, musica['instrumentalness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'instrumentalness', RBTinstrumentalness)
-       
 
     #Liveness
     RBTlivenessEntry = mp.get(catalog['caraContenido'], 'liveness')
@@ -279,8 +272,16 @@ def addVideoContext(catalog, musica):
         om.put(RBTloudness, musica['loudness'], ListaArtista)
         mp.put(catalog['caraContenido'], 'loudness', RBTloudness)
 
+def CrearLlaveMusicaGenero(catalog):
+    """
+    """
+    Lista = ['Reggae' , 'Down-tempo' , 'Chill-out' , 'Hip-hop' , 'Jazz and Funk' , 'Pop' , 
+             'R&B' , 'Rock' , 'Metal']
+    
+    for genero in Lista:
+        mp.put(catalog['musicaGenero'], genero, om.newMap('RBT'))
 
-def addVideoEtiquetas(catalog, video):
+def addMapMusicaGenero(catalog, musica):
     """
     """
     #Reggae
@@ -479,7 +480,7 @@ def addMapMusicaFechas(catalog, musica):
         ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['create_at'])
         ListaArtista = me.getValue(ListaArtistaEntry)
         lt.addLast(ListaArtista, musica)
-        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)
+        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtistaa)
 
 
 # ==============================
