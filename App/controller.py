@@ -88,41 +88,6 @@ def loadVideosEtiquetas(catalog):
 # Funciones para consultas
 # ========================
 
-
-def videosSize(analyzer):
-    """
-    Numero de crimenes leidos
-    """
-    return model.videosSize(analyzer)
-
-
-def indexHeight(analyzer):
-    """
-    Altura del indice (arbol)
-    """
-    return model.indexHeight(analyzer)
-
-
-def indexSize(analyzer):
-    """
-    Numero de nodos en el arbol
-    """
-    return model.indexSize(analyzer)
-
-
-def minKey(analyzer):
-    """
-    La menor llave del arbol
-    """
-    return model.minKey(analyzer)
-
-
-def maxKey(analyzer):
-    """
-    La mayor llave del arbol
-    """
-    return model.maxKey(analyzer)
-
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
