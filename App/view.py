@@ -61,6 +61,9 @@ def loadData(catalog):
 
 catalog = None
 
+def musica(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
+    return controller.requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
+
 """
 Menu principal
 """
@@ -87,6 +90,11 @@ while True:
         print('Total of reproduction: ',respuesta[0], 'Total of unique artists: ', respuesta[1])
         
     elif int(inputs[0]) == 3:
+        valor_minEnergy = input('Inserte el valor mínimo de Energy: ')
+        valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
+        valor_minDanceability = input('Inserte el valor mínimo de Danceability: ')
+        valor_maxDanceability = input('Inserte el valor máximo de Danceability: ')
+        musica(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 4:
         print("\nCargando información de los videos ....")
