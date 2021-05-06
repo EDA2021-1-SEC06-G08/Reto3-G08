@@ -469,20 +469,20 @@ def addMapMusicaGenero(catalog, musica):
 
     def addMapMusicaFechas(catalog, musica):
 
-    EstaKey = om.contains(catalog['fechaMusica'], musica['created_at'])
-    if not(EstaKey):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(catalog['fechaMusica'], musica['created_at'], ArtistList)
-        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['created_at'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)
+        EstaKey = om.contains(catalog['fechaMusica'], musica['created_at'])
+        if not(EstaKey):
+            ArtistList = lt.newList('SINGLE_LINKED')
+            om.put(catalog['fechaMusica'], musica['created_at'], ArtistList)
+            ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['created_at'])
+            ListaArtista = me.getValue(ListaArtistaEntry)
+            lt.addLast(ListaArtista, musica)
+            om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)
 
-    else:
-        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['created_at'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)}
+        else:
+            ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['created_at'])
+            ListaArtista = me.getValue(ListaArtistaEntry)
+            lt.addLast(ListaArtista, musica)
+            om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)}
 
 #requerimiento 1 
 
