@@ -310,7 +310,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTdown_tempo = me.getValue(RBTdown_tempoEntry)        
     EstaKey = om.contains(RBTdown_tempo, musica['tempo'])
 
-    if not(EstaKey) and (int(musica['tempo']0) >= 70 and int(musica['tempo']) <= 100):
+    if not(EstaKey) and (int(musica['tempo']) >= 70 and int(musica['tempo']) <= 100):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTdown_tempo, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
