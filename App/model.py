@@ -290,7 +290,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTreggae = me.getValue(RBTreggaeEntry)        
     EstaKey = om.contains(RBTreggae, musica['tempo'])
 
-    if not(EstaKey) and (int(musica['tempo']) >= 60 and int(musica['tempo']) <= 90):
+    if not(EstaKey) and (float(musica['tempo']) >= 60 and float(musica['tempo']) <= 90):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTreggae, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTreggae, musica['tempo'])
@@ -310,7 +310,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTdown_tempo = me.getValue(RBTdown_tempoEntry)        
     EstaKey = om.contains(RBTdown_tempo, musica['tempo'])
 
-    if not(EstaKey) and (int(musica['tempo']0) >= 70 and int(musica['tempo']) <= 100):
+    if not(EstaKey) and (float(musica['tempo']) >= 70 and float(musica['tempo']) <= 100):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTdown_tempo, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
@@ -330,7 +330,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTchill_out = me.getValue(RBTchill_outEntry)        
     EstaKey = om.contains(RBTchill_out, musica['tempo'])
 
-    if not(EstaKey) and (int(musica['tempo']) >= 90 and int(musica['tempo']) <= 120):
+    if not(EstaKey) and (float(musica['tempo']) >= 90 and float(musica['tempo']) <= 120):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTchill_out, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTchill_out, musica['tempo'])
@@ -350,7 +350,7 @@ def addMapMusicaGenero(catalog, musica):
     RBThip_hop = me.getValue(RBThip_hopEntry)        
     EstaKey = om.contains(RBThip_hop, musica['tempo'])
 
-    if not(EstaKey) and (int(musica['tempo']) >= 85 and int(musica['tempo']) <= 115):
+    if not(EstaKey) and (float(musica['tempo']) >= 85 and float(musica['tempo']) <= 115):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBThip_hop, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBThip_hop, musica['tempo'])
@@ -370,7 +370,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTjazzandfunk = me.getValue(RBTjazzandfunkEntry)        
     EstaKey = om.contains(RBTjazzandfunk, musica['tempo'])
 
-    if not(EstaKey) and (int(musica['tempo']) >= 120 and int(musica['tempo']) <= 125):
+    if not(EstaKey) and (float(musica['tempo']) >= 120 and float(musica['tempo']) <= 125):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTjazzandfunk, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTjazzandfunk, musica['tempo'])
@@ -390,7 +390,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTpop = me.getValue(RBTpopEntry)        
     EstaKey = om.contains(RBTpop, musica['tempo'])
 
-    if not(EstaKey) and (int(musica['tempo']) >= 100 and int(musica['tempo']) <= 130):
+    if not(EstaKey) and (float(musica['tempo']) >= 100 and float(musica['tempo']) <= 130):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTpop, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTpop, musica['tempo'])
@@ -410,7 +410,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTrandb = me.getValue(RBTrandbEntry)   
 
     EstaKey = om.contains(RBTrandb, musica['tempo'])
-    if not(EstaKey) and (int(musica['tempo']) >= 60 and int(musica['tempo']) <= 80):
+    if not(EstaKey) and (float(musica['tempo']) >= 60 and float(musica['tempo']) <= 80):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTrandb, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTrandb, musica['tempo'])
@@ -430,7 +430,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTrock = me.getValue(RBTrockEntry)  
 
     EstaKey = om.contains(RBTrock, musica['tempo'])
-    if not(EstaKey) and (int(musica['tempo']) >= 110 and int(musica['tempo']) <= 140):
+    if not(EstaKey) and (float(musica['tempo']) >= 110 and float(musica['tempo']) <= 140):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTrock, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTrock, musica['tempo'])
@@ -450,7 +450,7 @@ def addMapMusicaGenero(catalog, musica):
     RBTmetal = me.getValue(RBTmetalEntry)   
 
     EstaKey = om.contains(RBTmetal, musica['tempo'])
-    if not(EstaKey) and (int(musica['tempo']) >= 110 and int(musica['tempo']) <= 140):
+    if not(EstaKey) and (float(musica['tempo']) >= 110 and float(musica['tempo']) <= 140):
         ArtistList = lt.newList('SINGLE_LINKED')
         om.put(RBTmetal, musica['tempo'], ArtistList)
         ListaArtistaEntry = om.get(RBTmetal, musica['tempo'])
