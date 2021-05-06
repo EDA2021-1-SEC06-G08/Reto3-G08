@@ -486,6 +486,7 @@ def addMapMusicaFechas(catalog, musica):
 
 
 #requerimiento 1 
+
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     artistasRepetidos = lt.newList('ARRAY_LIST')
     artistasUnicos = set()
@@ -512,6 +513,7 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
 
 
 #requerimiento 2 
+
 def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
     artistasUnicos = set()
     artistasUnicos2 = set()
@@ -544,6 +546,8 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
 
     return len(artistasUnicos), len(artistasUnicos2)
     
+
+#Requerimiento 3
 
 # ==============================
 # Funciones de Comparacion
