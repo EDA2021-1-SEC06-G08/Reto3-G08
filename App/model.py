@@ -483,6 +483,68 @@ def addMapMusicaFechas(catalog, musica):
         om.put(catalog['fechaMusica'], musica['create_at'], ListaArtistaa)
 
 
+
+
+#requerimiento 1 
+def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
+    artistasRepetidos = lt.newList('ARRAY_LIST')
+    artistasUnicos = set()
+    entry = mp.get(catalog['caraContenido'], caracteristica)
+    arbol = me.getValue(entry)
+    lista_llaves = om.keys(arbol, valor_min, valor_max)
+    lista_artistas = om.values(arbol, valor_min, valor_max)
+    iterador = it.newIterator(lista_artistas)
+    while it.hasNext(iterador):  
+        datos = it.next(iterador)
+        elementos = datos #elementos es una lista que tengo que recorrer 
+        iterador_lista = it.newIterator(elementos)
+        while it.hasNext(iterador_lista):
+            dato = it.next(iterador_lista) #iterar sobre esta lista por artist_id
+            artistas_id = dato['artist_id']
+            if artistas_id not in artistasRepetidos:
+               lt.addLast(artistasRepetidos, artistas_id)
+    iterador_artistas_unicos = it.newIterator(artistasRepetidos)
+    while it.hasNext(iterador_artistas_unicos):
+        artist_id_no_repetido = it.next(iterador_artistas_unicos)
+        if artist_id_no_repetido not in artistasUnicos:
+            artistasUnicos.add(artist_id_no_repetido)
+    return lt.size(artistasRepetidos), len(artistasUnicos)
+
+
+#requerimiento 2 
+def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
+    artistasUnicos = set()
+    artistasUnicos2 = set()
+    entry1_energy = mp.get(catalog['caraContenido'], 'energy')
+    arbol_energy = me.getValue(entry1_energy)
+    lista_valuesEnergy = om.values(arbol_energy, valor_minEnergy, valor_maxEnergy)
+    entry2_danceability = mp.get(catalog['caraContenido'], 'danceability')
+    arbol_danceability = me.getValue(entry2_danceability)
+    lista_valuesDanceability = om.values(arbol_danceability,valor_minDanceability, valor_maxDanceability)
+    iterador_energy = it.newIterator(lista_valuesEnergy)
+    while  it.hasNext(iterador_energy):
+        datos = it.next(iterador_energy)
+        elementos = datos 
+        iterador_lista = it.newIterator(elementos)
+        while it.hasNext(iterador_lista):
+            dato = it.next(iterador_lista)
+            artistas_id = dato['artist_id']
+            if artistas_id not in artistas_unicos:
+                artistasUnicos.add(artistas_id)
+    iterador_danceability = it.newIterator(lista_valuesDanceability)
+    while it.hasnext(iterador_danceability):
+        datos2 = it.next(iterador_danceability)
+        elementos2 = datos 
+        iterador_lista2 = it.newIterator(elementos2)
+        while it.hasNext(iterador_lista2):
+            dato2 = it.next(iterador_lista2)
+            artistas_id2 = dato['artist_id']
+            if artistas_id2 not in artistasUnicos2:
+                artistasUnicos2.add(artistas_id2)
+
+    return len(artistasUnicos), len(artistasUnicos2)
+    
+
 # ==============================
 # Funciones de Comparacion
 # ==============================
