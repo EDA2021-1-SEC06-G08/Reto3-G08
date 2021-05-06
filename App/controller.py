@@ -72,7 +72,7 @@ def loadVideosContext(catalog):
     for musica in input_file:
         model.addMapMusicaContext(catalog, musica)
         model.addMapMusicaGenero(catalog, musica)
-        model.addMapMusicaFechas(catalog, musica)
+       # model.addMapMusicaFechas(catalog, musica)
 
 def loadVideosEtiquetas(catalog):
     """

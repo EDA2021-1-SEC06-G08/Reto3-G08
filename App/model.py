@@ -31,6 +31,7 @@ from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.DataStructures import listiterator as it
 import datetime
 assert cf
 
@@ -466,7 +467,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Metal', RBTmetal)
     
 
-def addMapMusicaFechas(catalog, musica):
+"""def addMapMusicaFechas(catalog, musica):
 
     EstaKey = om.contains(catalog['fechaMusica'], musica['create_at'])
     if not(EstaKey):
@@ -481,7 +482,7 @@ def addMapMusicaFechas(catalog, musica):
         ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['create_at'])
         ListaArtista = me.getValue(ListaArtistaEntry)
         lt.addLast(ListaArtista, musica)
-        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)
+        om.put(catalog['fechaMusica'], musica['create_at'], ListaArtista)"""
 
 
 #requerimiento 1 
