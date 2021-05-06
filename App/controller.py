@@ -91,3 +91,12 @@ def loadVideosEtiquetas(catalog):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+#requerimiento 1
+def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
+    return model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
+
+#requerimiento 2 
+def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
+    return model.musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
+
+
