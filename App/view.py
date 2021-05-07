@@ -76,7 +76,7 @@ def artista_unico(catalog):
     """
     Da la cantidad de artistas unicos
     """
-    artistasNoRepetidos = lt.newList('SINGLE_LINKED')
+    artistasNoRepetidos = lt.newList('ARRAY_LIST')
     iterator = it.newIterator(catalog['videosContext'])
     while it.hasNext(iterator):
         musica = it.next(iterator)
@@ -88,7 +88,7 @@ def canciones_unicas(catalog):
     """
     Da la cantidad de canciones unicas
     """
-    cancionesNoRepetidas = lt.newList('SINGLE_LINKED')
+    cancionesNoRepetidas = lt.newList('ARRAY_LIST')
     iterator = it.newIterator(catalog['videosContext'])
     while it.hasNext(iterator):
         musica = it.next(iterator)
@@ -125,6 +125,14 @@ def desarrollo(catalog):
     canciones_unicas(catalog)
     losCincos(catalog)
 
+#==========================
+#Solucion de requerimientos
+#==========================
+
+#requerimiento 1
+
+
+#requerimiento 2
 
 def organizar_req2(lista):
     print('Total of unique tracks in events: ', lt.size(lista))
