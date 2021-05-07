@@ -489,6 +489,7 @@ def addMapMusicaFechas(catalog, musica):
 
 
 #requerimiento 1 
+
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     """
     """
@@ -529,7 +530,6 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
                 if int(lt.isPresent(tracksUnicos,tracks_id2)) == 0:
                     lt.addLast(tracksUnicos, tracks_id2)
                     lt.addLast(canciones,dato)
-
     return canciones
     
 

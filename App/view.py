@@ -152,6 +152,7 @@ while True:
         valor_min = input('Inserte el valor mínimo: ')
         valor_max = input('Inserte el valor máximo: ')
         respuesta = controller.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
+        print("\nCargando información de los videos ....")
         print(caracteristica, 'is between', valor_min, 'and', valor_max)
         print('Total of reproduction: ',respuesta[0], 'Total of unique artists: ', respuesta[1])    
     elif int(inputs[0]) == 4:
