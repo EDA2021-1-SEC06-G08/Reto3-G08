@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+import random
 import config as cf
 import sys
 import controller
@@ -121,6 +122,7 @@ def losCincos(catalog):
 
 def desarrollo(catalog):
     """
+    Contiene las funciones auxiliares del desarrolllo parte 2
     """
     print("La cantidad de eventos escuchados es: " + str(lt.size(catalog['videosContext'])))
     artista_unico(catalog)
@@ -134,16 +136,34 @@ def desarrollo(catalog):
 
 #requerimiento 1
 
+def requerimiento1(caracteristica, valor_min, valor_max, catalog):
+    """
+    LLama la funcion del requerimiento 1 del controller
+    """
+    return controller.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
 
 #requerimiento 2
 
+def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
+    """
+    LLama la funcion del requerimiento 2 del controller
+    """
+    return controller.requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
+
 def organizar_req2(lista):
-    print('Total of unique tracks in events: ', lt.size(lista))
+    """
+    Organiza el total y el valor de informacion de la musica
+    """
+    print('Total of unique tracks in events: ' + str(lt.size(lista)))
     i = 1
     while i <= 5:
-        track = lt.getElement(lista, i)
-        print("Track", i, ':', track['track_id'], 'with energy of', track['energy'], 'and', 'danceability of', track['danceability'])
+        intRandom = random.randint(0, int(lt.size(lista))-1)
+        track = lt.getElement(lista, intRandom)
+        print("Track" + str(intRandom) + ':' + str(track['track_id']) + 'with energy of' 
+              + str(track['energy']) + 'and' + 'danceability of' + str(track['danceability']))
         i += 1
+
+#requerimiento3
 
 catalog = None
 """
@@ -163,17 +183,17 @@ while True:
         caracteristica = input('Inserte la característica: ')
         valor_min = input('Inserte el valor mínimo: ')
         valor_max = input('Inserte el valor máximo: ')
-        respuesta = controller.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
         print("\nCargando información de los videos ....")
-        print(caracteristica, 'is between', valor_min, 'and', valor_max)
-        print('Total of reproduction: ',respuesta[0], 'Total of unique artists: ', respuesta[1])    
+        respuesta = requerimiento1(caracteristica, valor_min, valor_max, catalog)
+        print(str(caracteristica) + 'is between' + str(valor_min) + 'and' + str(valor_max))
+        print('Total of reproduction: ' + str(respuesta[0]) + 'Total of unique artists: ' + str(respuesta[1]))    
     elif int(inputs[0]) == 4:
         valor_minEnergy = input('Inserte el valor mínimo de Energy: ')
         valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
         valor_minDanceability = input('Inserte el valor mínimo de Danceability: ')
         valor_maxDanceability = input('Inserte el valor máximo de Danceability: ')
         print("\nCargando información de los videos ....")
-        respuesta = controller.requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
+        respuesta = requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
         organizar_req2(respuesta)
     elif int(inputs[0]) == 5:
         print("\nCargando información de los videos ....")

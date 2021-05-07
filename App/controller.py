@@ -56,6 +56,7 @@ def loadData(catalog):
 
 def loadVideosInfo(catalog):
     """
+    Carga los datos de user_track
     """
     videosfile = cf.data_dir + 'user_track_hashtag_timestamp-small.csv'
     input_file = csv.DictReader(open(videosfile))
@@ -64,6 +65,7 @@ def loadVideosInfo(catalog):
 
 def loadVideosContext(catalog):
     """
+    Carga los datos de context_content
     """
     videosfile = cf.data_dir + 'context_content_features-small.csv'
     input_file = csv.DictReader(open(videosfile))
@@ -77,6 +79,7 @@ def loadVideosContext(catalog):
 
 def loadVideosEtiquetas(catalog):
     """
+    Carga los datos de sentiment_values
     """
     videofile = cf.data_dir + 'sentiment_values.csv'
     input_file = csv.DictReader(open(videofile))
@@ -92,19 +95,21 @@ def loadVideosEtiquetas(catalog):
 #requerimiento 1
 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
-
+    """
+    Obtiene la informacion del requerimiento 1
+    """
     return model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
 
 #requerimiento 2 
 
 def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
-
+    """
+    Obtiene la informacion del requerimiento 2
+    """
     return model.musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
 
 #requerimiento 3
 
-def requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog):
-
-    return model.musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
-
 #requerimiento 4
+
+#requerimiento 5

@@ -80,6 +80,7 @@ def addMusicaContext(catalog, musica):
     
 def CrearLlaveMusicaContext(catalog):
     """
+    Crea las keys de la tabla de hash por caracteristica de contenido
     """
     Lista = ['instrumentalness' , 'liveness' , 'speechiness' , 'danceability' , 'valence' ,
              'loudness' , 'tempo' , 'acousticness' , 'energy']
@@ -89,6 +90,7 @@ def CrearLlaveMusicaContext(catalog):
 
 def addMapMusicaContext(catalog, musica):
     """
+    Agrega los RBT que son los values de la tabla de hash de caracteristica de contenido
     """
 
     #Instrumentalness
@@ -275,6 +277,7 @@ def addMapMusicaContext(catalog, musica):
 
 def CrearLlaveMusicaGenero(catalog):
     """
+    Crea las keys de la tabla de hash por genero
     """
     Lista = ['Reggae' , 'Down-tempo' , 'Chill-out' , 'Hip-hop' , 'Jazz and Funk' , 'Pop' , 
              'R&B' , 'Rock' , 'Metal']
@@ -284,6 +287,7 @@ def CrearLlaveMusicaGenero(catalog):
 
 def addMapMusicaGenero(catalog, musica):
     """
+    Agrega los RBT de la tabla de hash de los generos
     """
     #Reggae
     RBTreggaeEntry = mp.get(catalog['musicaGenero'], 'Reggae')
@@ -467,6 +471,9 @@ def addMapMusicaGenero(catalog, musica):
     
 
 def addMapMusicaFechas(catalog, musica):
+    """
+    Reliza un RBT por fechas que contiene la musica en este periodo
+    """
     EstaKey = om.contains(catalog['fechaMusica'], musica['created_at'])
     if not(EstaKey):
         ArtistList = lt.newList('SINGLE_LINKED')
@@ -492,6 +499,7 @@ def addMapMusicaFechas(catalog, musica):
 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     """
+    Retorna la cantidad de llamados para una caracteristica y la cantidad no repetida de autores
     """
     artistasNoRepetidos = lt.newList('ARRAY_LIST')
     artistasRepetidos = lt.newList('ARRAY_LIST')
@@ -514,6 +522,9 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
 #requerimiento 2 
 
 def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
+    """
+    Retorna una lista con las canciones 
+    """
     tracksUnicos = lt.newList('ARRAY_LIST')
     canciones = lt.newList('ARRAY_LIST')
     entry2_danceability = mp.get(catalog['caraContenido'], 'danceability')
@@ -533,42 +544,11 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
     return canciones
     
 
-#Requerimiento 3
+#requerimiento 3
 
-def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog):
-    
-    artistasUnicos = set()
-    artistasUnicos2 = set()
-    entry1_tempo = mp.get(catalog['caraContenido'], 'tempo')
-    arbol_tempo = me.getValue(entry1_tempo)
-    lista_valuesTempo = om.values(arbol_tempo, valor_minTempo, valor_maxTempo)
-    entry2_instrumentalness = mp.get(catalog['caraContenido'], 'instrumentalness')
-    arbol_instrumentalness = me.getValue(entry2_instrumentalness)
-    lista_valuesInstrumentalness = om.values(arbol_instrumentalness,valor_minInstrumentalness, valor_maxInstrumentalness)
-    iterador_tempo = it.newIterator(lista_valuesTempo)
-    while  it.hasNext(iterador_tempo):
-        datos = it.next(iterador_tempo)
-        elementos = datos 
-        iterador_lista = it.newIterator(elementos)
-        while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista)
-            artistas_id = dato['track_id']
-            if artistas_id not in artistas_unicos:
-                artistasUnicos.add(artistas_id)
-    iterador_instrumentalness = it.newIterator(lista_valuesInstrumentalness)
-    while it.hasnext(iterador_instrumentalness):
-        datos2 = it.next(iterador_instrumentalness)
-        elementos2 = datos 
-        iterador_lista2 = it.newIterator(elementos2)
-        while it.hasNext(iterador_lista2):
-            dato2 = it.next(iterador_lista2)
-            artistas_id2 = dato['track_id']
-            if artistas_id2 not in artistasUnicos2:
-                artistasUnicos2.add(artistas_id2)
+#requerimiento 4
 
-    return len(artistasUnicos), len(artistasUnicos2)
-
-# requerimiento 4
+#requerimiento 5
 
 
 
