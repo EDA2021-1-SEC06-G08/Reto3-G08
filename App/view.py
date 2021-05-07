@@ -126,8 +126,6 @@ def desarrollo(catalog):
     losCincos(catalog)
 
 
-catalog = None
-
 def organizar_req2(lista):
     print('Total of unique tracks in events: ', lt.size(lista))
     i = 1
@@ -136,6 +134,7 @@ def organizar_req2(lista):
         print("Track", i, ':', track['track_id'], 'with energy of', track['energy'], 'and', 'danceability of', track['danceability'])
         i += 1
 
+catalog = None
 """
 Menu principal
 """
@@ -148,7 +147,7 @@ while True:
         loadData(catalog)
     elif int(inputs[0]) == 2: #Da los resultados de la parte 2 del desarrollo
         print("\nCargando información de los videos ....")
-        desarrollo(catalog)
+        desarrollo(catalog) 
     elif int(inputs[0]) == 3:
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 4:
