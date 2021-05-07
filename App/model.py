@@ -39,7 +39,6 @@ assert cf
 # API del TAD Catalogo de Videos
 # ==============================
 
-
 def newCatalog():
     """ 
     Inicializa el catalogo crea una lista vacia para guardar todas las musicas
@@ -68,11 +67,9 @@ def newCatalog():
     return catalog
 
 
-
 # ==============================================
 # Funciones para agregar informacion al catalogo
 # ==============================================
-
 
 def addMusicaContext(catalog, musica):
     """
@@ -483,6 +480,7 @@ def addMapMusicaFechas(catalog, musica):
         ListaArtista = me.getValue(ListaArtistaEntry)
         lt.addLast(ListaArtista, musica)
         om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)
+
 
 #================================
 #FUNCIONES DEL LOS REQUERIMIENTOS

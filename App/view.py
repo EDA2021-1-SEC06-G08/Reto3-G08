@@ -71,6 +71,7 @@ def loadData(catalog):
 #===============================
 #FUNCIONES DATOS DE LOS ARCHIVOS
 #===============================
+
 def artista_unico(catalog):
     """
     Da la cantidad de artistas unicos
@@ -133,11 +134,11 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    if int(inputs[0]) == 1: #Inicializa el catalogo y Mete los datos
         print("\nCargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-    elif int(inputs[0]) == 2:
+    elif int(inputs[0]) == 2: #Da los resultados de la parte 2 del desarrollo
         print("\nCargando información de los videos ....")
         desarrollo(catalog)
     elif int(inputs[0]) == 3:
