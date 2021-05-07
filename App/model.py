@@ -487,35 +487,8 @@ def addMapMusicaFechas(catalog, musica):
 #FUNCIONES DEL LOS REQUERIMIENTOS
 #================================
 
-"""
-#requerimiento 1 
 
-def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
-    """
-    """
-    artistasNoRepetidos = lt.newList('ARRAY_LIST')
-    artistasRepetidos = lt.newList('ARRAY_LIST')
-    artistasUnicos = set()
-    entry = mp.get(catalog['caraContenido'], caracteristica)
-    arbol = me.getValue(entry)
-    lista_llaves = om.keys(arbol, valor_min, valor_max)
-    lista_artistas = om.values(arbol, valor_min, valor_max)
-    iterador = it.newIterator(lista_artistas)
-    while it.hasNext(iterador):  
-        datos = it.next(iterador)
-        elementos = datos #elementos es una lista que tengo que recorrer 
-        iterador_lista = it.newIterator(elementos)
-        while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista) #iterar sobre esta lista por artist_id
-            artistas_id = dato['artist_id']
-            if artistas_id not in artistasRepetidos:
-               lt.addLast(artistasRepetidos, artistas_id)
-    iterador_artistas_unicos = it.newIterator(artistasRepetidos)
-    while it.hasNext(iterador_artistas_unicos):
-        artist_id_no_repetido = it.next(iterador_artistas_unicos)
-        if artist_id_no_repetido not in artistasUnicos:
-            artistasUnicos.add(artist_id_no_repetido)
-    return lt.size(artistasRepetidos), len(artistasUnicos)"""
+#requerimiento 1 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     """
     """

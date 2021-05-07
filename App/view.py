@@ -126,8 +126,6 @@ def desarrollo(catalog):
     losCincos(catalog)
 
 
-catalog = None
-
 def organizar_req2(lista):
     print('Total of unique tracks in events: ', lt.size(lista))
     i = 1
@@ -136,6 +134,7 @@ def organizar_req2(lista):
         print("Track", i, ':', track['track_id'], 'with energy of', track['energy'], 'and', 'danceability of', track['danceability'])
         i += 1
 
+catalog = None
 """
 Menu principal
 """
