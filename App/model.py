@@ -484,6 +484,10 @@ def addMapMusicaFechas(catalog, musica):
         lt.addLast(ListaArtista, musica)
         om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)
 
+#================================
+#FUNCIONES DEL LOS REQUERIMIENTOS
+#================================
+
 #requerimiento 1 
 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
@@ -580,9 +584,9 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
 
     return len(artistasUnicos), len(artistasUnicos2)
 
-# ==============================
+# ========================
 # Funciones de Comparacion
-# ==============================
+# ========================
 
 
 def compareIds(id1, id2):

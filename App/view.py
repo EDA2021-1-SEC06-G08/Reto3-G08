@@ -51,6 +51,10 @@ def printMenu():
     print("0- Salir")
     print("=======================================")
 
+#===========================
+#IMPLEMENTACION DEL CATALOGO
+#===========================
+
 def initCatalog():
     """
     Inicializa el catalogo de la musica
@@ -63,20 +67,25 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+
+#===============================
+#FUNCIONES DATOS DE LOS ARCHIVOS
+#===============================
 def artista_unico(catalog):
     """
+    Da la cantidad de artistas unicos
     """
     artistasNoRepetidos = lt.newList('SINGLE_LINKED')
     iterator = it.newIterator(catalog['videosContext'])
     while it.hasNext(iterator):
         musica = it.next(iterator)
-        if int(lt.isPresent(artistasNoRepetidos, musica['artista_id'])) == 0:
-            lt.addLast(artistasNoRepetidos, musica['artista_id'])
-    print(artistasNoRepetidos)
+        if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+            lt.addLast(artistasNoRepetidos, musica['artist_id'])
     print("La cantidad de artistas unicos es: " +  str(lt.size(artistasNoRepetidos)))
 
 def canciones_unicas(catalog):
     """
+    Da la cantidad de canciones unicas
     """
     cancionesNoRepetidas = lt.newList('SINGLE_LINKED')
     iterator = it.newIterator(catalog['videosContext'])
@@ -86,11 +95,34 @@ def canciones_unicas(catalog):
             lt.addLast(cancionesNoRepetidas, musica['track_id'])
     print("La cantidad de canciones unicas es: " +  str(lt.size(cancionesNoRepetidas)))
 
+def losCincos(catalog):
+    """
+    Retorna los primeros 5 videos y los ultimos 5 videos
+    """
+    size = lt.size(catalog['videosContext'])
+    i=0
+    j=int(size)-5
+    while i <= 4:
+        musica = lt.getElement(catalog['videosContext'], i)
+        print("\n=====================")
+        print(musica) 
+        print("\n=====================")
+        i += 1
+    
+    while j <= (int(size)-1):
+        musica = lt.getElement(catalog['videosContext'], j)
+        print("\n=====================")
+        print(musica) 
+        print("\n=====================")
+        j += 1
+
 def desarrollo(catalog):
     """
     """
+    print("La cantidad de eventos escuchados es: " + str(lt.size(catalog['videosContext'])))
     artista_unico(catalog)
     canciones_unicas(catalog)
+    losCincos(catalog)
 
 
 catalog = None
@@ -108,7 +140,6 @@ while True:
     elif int(inputs[0]) == 2:
         print("\nCargando información de los videos ....")
         desarrollo(catalog)
-        print("La cantidad de eventos escuchados es: " + str(lt.size(catalog['videosContext'])))
     elif int(inputs[0]) == 3:
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 4:
