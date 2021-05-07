@@ -61,7 +61,6 @@ def loadData(catalog):
 
 catalog = None
 
-
 """
 Menu principal
 """
