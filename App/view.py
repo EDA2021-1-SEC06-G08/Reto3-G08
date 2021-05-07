@@ -153,11 +153,16 @@ while True:
         print("\nCargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-    elif int(inputs[0]) == 2: #Da los resultados de la parte 2 del desarrollo
-        print("\nCargando información de los videos ....")
-        desarrollo(catalog) 
+    if int(inputs[0]) == 2:
+        print("\nCargando información de los archivos ....")
     elif int(inputs[0]) == 3:
+        caracteristica = input('Inserte la característica: ')
+        valor_min = input('Inserte el valor mínimo: ')
+        valor_max = input('Inserte el valor máximo: ')
+        respuesta = controller.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
         print("\nCargando información de los videos ....")
+        print(caracteristica, 'is between', valor_min, 'and', valor_max)
+        print('Total of reproduction: ',respuesta[0], 'Total of unique artists: ', respuesta[1])    
     elif int(inputs[0]) == 4:
         valor_minEnergy = input('Inserte el valor mínimo de Energy: ')
         valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
