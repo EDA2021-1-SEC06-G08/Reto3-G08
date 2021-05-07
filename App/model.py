@@ -485,7 +485,7 @@ def addMapMusicaFechas(catalog, musica):
 
 
 
-
+"""
 #requerimiento 1 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     artistasRepetidos = lt.newList('ARRAY_LIST')
@@ -509,43 +509,48 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
         artist_id_no_repetido = it.next(iterador_artistas_unicos)
         if artist_id_no_repetido not in artistasUnicos:
             artistasUnicos.add(artist_id_no_repetido)
-    return lt.size(artistasRepetidos), len(artistasUnicos)
-
+    return lt.size(artistasRepetidos), len(artistasUnicos)"""
+def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
+    """
+    """
+    artistasNoRepetidos = lt.newList('ARRAY_LIST')
+    artistasRepetidos = lt.newList('ARRAY_LIST')
+    MapCaracteristicas = mp.get(catalog['caraContenido'], caracteristica)
+    RBTcaracteristica = me.getValue(MapCaracteristicas)
+    lista_listas_musica = om.values(RBTcaracteristica, valor_min, valor_max)
+    lista_lista_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(lista_lista_musica):  
+        lista_musica = it.next(lista_lista_musica)#lista_musica es una lista que tengo que recorrer 
+        musicas = it.newIterator(lista_musica)
+        while it.hasNext(musicas):
+            musica = it.next(musicas) #iterar sobre esta lista por artist_id
+            if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+               lt.addLast(artistasNoRepetidos, musica['artist_id'])
+               lt.addLast(artistasRepetidos, musica['artist_id'])
+            else:
+                lt.addLast(artistasRepetidos, musica['artist_id'])
+    return lt.size(artistasRepetidos), lt.size(artistasNoRepetidos)
 
 #requerimiento 2 
 def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
-    tracksUnicos = lt.newList('SINGLE_LINKED')
-    tracksUnicos2 = set()
-    tracksUnicos3 = set()
-    entry1_energy = mp.get(catalog['caraContenido'], 'energy')
-    arbol_energy = me.getValue(entry1_energy)
-    lista_valuesEnergy = om.values(arbol_energy, valor_minEnergy, valor_maxEnergy)
+    tracksUnicos = lt.newList('ARRAY_LIST')
+    canciones = lt.newList('ARRAY_LIST')
     entry2_danceability = mp.get(catalog['caraContenido'], 'danceability')
     arbol_danceability = me.getValue(entry2_danceability)
-    lista_valuesDanceability = om.values(arbol_danceability,valor_minDanceability, valor_maxDanceability)
-    iterador_energy = it.newIterator(lista_valuesEnergy)
-    while  it.hasNext(iterador_energy):
-        datos = it.next(iterador_energy)
-        elementos = datos 
-        iterador_lista = it.newIterator(elementos)
-        while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista)
-            if (dato['energy'] >= valor_minEnergy and dato['energy'] <= valor_maxEnergy):
-                tracks_id = dato['track_id']
-                if tracks_id not in tracksUnicos:
-                    lt.addLast(tracksUnicos, tracks_id)
+    lista_valuesDanceability = om.values(arbol_danceability,valor_minDanceability, valor_maxDanceability)               
     iterador_danceability = it.newIterator(lista_valuesDanceability)
     while it.hasNext(iterador_danceability):
-        datos2 = it.next(iterador_danceability)
-        elementos2 = datos 
-        iterador_lista2 = it.newIterator(elementos2)
+        datos = it.next(iterador_danceability) 
+        iterador_lista2 = it.newIterator(datos)
         while it.hasNext(iterador_lista2):
-            dato2 = it.next(iterador_lista2)
-            if (dato2['danceability'] >= valor_minDanceability) and (dato2['danceability'] <= valor_maxDanceability):
-                tracks_id2 = dato2['track_id']
-                if tracks_id2 not in tracksUnicos:
+            dato = it.next(iterador_lista2)
+            if (dato['energy'] >= valor_minEnergy and dato['energy'] <= valor_maxEnergy):
+                tracks_id2 = dato['track_id']
+                if int(lt.isPresent(tracksUnicos,tracks_id2)) == 0:
                     lt.addLast(tracksUnicos, tracks_id2)
-    #return len(tracksUnicos)
+                    lt.addLast(canciones,dato)
+
+    return canciones
     
 
 # ==============================
@@ -563,3 +568,4 @@ def compareIds(id1, id2):
         return 1
     else:
         return -1
+
