@@ -52,6 +52,7 @@ def printMenu():
     print("0- Salir")
     print("=======================================")
 
+
 #===========================
 #IMPLEMENTACION DEL CATALOGO
 #===========================
@@ -126,9 +127,9 @@ def desarrollo(catalog):
     canciones_unicas(catalog)
     losCincos(catalog)
 
-#==========================
-#Solucion de requerimientos
-#==========================
+#=========================
+#Solucion de requerimiento
+#=========================
 
 #requerimiento 1
 
