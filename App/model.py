@@ -489,28 +489,25 @@ def addMapMusicaFechas(catalog, musica):
 #requerimiento 1 
 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
+    """
+    """
+    artistasNoRepetidos = lt.newList('ARRAY_LIST')
     artistasRepetidos = lt.newList('ARRAY_LIST')
-    artistasUnicos = set()
-    entry = mp.get(catalog['caraContenido'], caracteristica)
-    arbol = me.getValue(entry)
-    lista_artistas = om.values(arbol, valor_min, valor_max)
-    iterador = it.newIterator(lista_artistas)
-    while it.hasNext(iterador):  
-        datos = it.next(iterador)
-        elementos = datos #elementos es una lista que tengo que recorrer 
-        iterador_lista = it.newIterator(elementos)
-        while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista) #iterar sobre esta lista por artist_id
-            artistas_id = dato['artist_id']
-            if artistas_id not in artistasRepetidos:
-               lt.addLast(artistasRepetidos, artistas_id)
-    iterador_artistas_unicos = it.newIterator(artistasRepetidos)
-    while it.hasNext(iterador_artistas_unicos):
-        artist_id_no_repetido = it.next(iterador_artistas_unicos)
-        if artist_id_no_repetido not in artistasUnicos:
-            artistasUnicos.add(artist_id_no_repetido)
-    return lt.size(artistasRepetidos), len(artistasUnicos)
-
+    MapCaracteristicas = mp.get(catalog['caraContenido'], caracteristica)
+    RBTcaracteristica = me.getValue(MapCaracteristicas)
+    lista_listas_musica = om.values(RBTcaracteristica, valor_min, valor_max)
+    lista_lista_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(lista_lista_musica):  
+        lista_musica = it.next(lista_lista_musica)#lista_musica es una lista que tengo que recorrer 
+        musicas = it.newIterator(lista_musica)
+        while it.hasNext(musicas):
+            musica = it.next(musicas) #iterar sobre esta lista por artist_id
+            if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+               lt.addLast(artistasNoRepetidos, musica['artist_id'])
+               lt.addLast(artistasRepetidos, musica['artist_id'])
+            else:
+                lt.addLast(artistasRepetidos, musica['artist_id'])
+    return lt.size(artistasRepetidos), lt.size(artistasNoRepetidos)
 
 #requerimiento 2 
 
@@ -581,6 +578,10 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
                 artistasUnicos2.add(artistas_id2)
 
     return len(artistasUnicos), len(artistasUnicos2)
+
+# requerimiento 4
+
+
 
 # ========================
 # Funciones de Comparacion
