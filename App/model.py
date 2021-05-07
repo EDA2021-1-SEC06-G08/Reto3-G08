@@ -39,7 +39,6 @@ assert cf
 # API del TAD Catalogo de Videos
 # ==============================
 
-
 def newCatalog():
     """ 
     Inicializa el catalogo crea una lista vacia para guardar todas las musicas
@@ -56,7 +55,7 @@ def newCatalog():
                'musicalGenero': None,
                'fechaMusica': None}
 
-    catalog['videosContext'] = lt.newList('SINGLE_LINKED', compareIds)
+    catalog['videosContext'] = lt.newList('SINGLE_LINKED')
     catalog['caraContenido'] = mp.newMap(30,
                                             maptype='PROBING',
                                             loadfactor=0.4)
@@ -68,14 +67,13 @@ def newCatalog():
     return catalog
 
 
-
 # ==============================================
 # Funciones para agregar informacion al catalogo
 # ==============================================
 
-
 def addMusicaContext(catalog, musica):
     """
+    Agrega una cancion a la lista de canciones
     """
     lt.addLast(catalog['videosContext'], musica)
     
@@ -483,32 +481,33 @@ def addMapMusicaFechas(catalog, musica):
         lt.addLast(ListaArtista, musica)
         om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)
 
+
+#================================
+#FUNCIONES DEL LOS REQUERIMIENTOS
+#================================
+
 #requerimiento 1 
 
 def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
+    """
+    """
+    artistasNoRepetidos = lt.newList('ARRAY_LIST')
     artistasRepetidos = lt.newList('ARRAY_LIST')
-    artistasUnicos = set()
-    entry = mp.get(catalog['caraContenido'], caracteristica)
-    arbol = me.getValue(entry)
-    lista_llaves = om.keys(arbol, valor_min, valor_max)
-    lista_artistas = om.values(arbol, valor_min, valor_max)
-    iterador = it.newIterator(lista_artistas)
-    while it.hasNext(iterador):  
-        datos = it.next(iterador)
-        elementos = datos #elementos es una lista que tengo que recorrer 
-        iterador_lista = it.newIterator(elementos)
-        while it.hasNext(iterador_lista):
-            dato = it.next(iterador_lista) #iterar sobre esta lista por artist_id
-            artistas_id = dato['artist_id']
-            if artistas_id not in artistasRepetidos:
-               lt.addLast(artistasRepetidos, artistas_id)
-    iterador_artistas_unicos = it.newIterator(artistasRepetidos)
-    while it.hasNext(iterador_artistas_unicos):
-        artist_id_no_repetido = it.next(iterador_artistas_unicos)
-        if artist_id_no_repetido not in artistasUnicos:
-            artistasUnicos.add(artist_id_no_repetido)
-    return lt.size(artistasRepetidos), len(artistasUnicos)
-
+    MapCaracteristicas = mp.get(catalog['caraContenido'], caracteristica)
+    RBTcaracteristica = me.getValue(MapCaracteristicas)
+    lista_listas_musica = om.values(RBTcaracteristica, valor_min, valor_max)
+    lista_lista_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(lista_lista_musica):  
+        lista_musica = it.next(lista_lista_musica)#lista_musica es una lista que tengo que recorrer 
+        musicas = it.newIterator(lista_musica)
+        while it.hasNext(musicas):
+            musica = it.next(musicas) #iterar sobre esta lista por artist_id
+            if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+               lt.addLast(artistasNoRepetidos, musica['artist_id'])
+               lt.addLast(artistasRepetidos, musica['artist_id'])
+            else:
+                lt.addLast(artistasRepetidos, musica['artist_id'])
+    return lt.size(artistasRepetidos), lt.size(artistasNoRepetidos)
 
 #requerimiento 2 
 
@@ -547,9 +546,46 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
 
 #Requerimiento 3
 
-# ==============================
+def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog):
+    
+    artistasUnicos = set()
+    artistasUnicos2 = set()
+    entry1_tempo = mp.get(catalog['caraContenido'], 'tempo')
+    arbol_tempo = me.getValue(entry1_tempo)
+    lista_valuesTempo = om.values(arbol_tempo, valor_minTempo, valor_maxTempo)
+    entry2_instrumentalness = mp.get(catalog['caraContenido'], 'instrumentalness')
+    arbol_instrumentalness = me.getValue(entry2_instrumentalness)
+    lista_valuesInstrumentalness = om.values(arbol_instrumentalness,valor_minInstrumentalness, valor_maxInstrumentalness)
+    iterador_tempo = it.newIterator(lista_valuesTempo)
+    while  it.hasNext(iterador_tempo):
+        datos = it.next(iterador_tempo)
+        elementos = datos 
+        iterador_lista = it.newIterator(elementos)
+        while it.hasNext(iterador_lista):
+            dato = it.next(iterador_lista)
+            artistas_id = dato['track_id']
+            if artistas_id not in artistas_unicos:
+                artistasUnicos.add(artistas_id)
+    iterador_instrumentalness = it.newIterator(lista_valuesInstrumentalness)
+    while it.hasnext(iterador_instrumentalness):
+        datos2 = it.next(iterador_instrumentalness)
+        elementos2 = datos 
+        iterador_lista2 = it.newIterator(elementos2)
+        while it.hasNext(iterador_lista2):
+            dato2 = it.next(iterador_lista2)
+            artistas_id2 = dato['track_id']
+            if artistas_id2 not in artistasUnicos2:
+                artistasUnicos2.add(artistas_id2)
+
+    return len(artistasUnicos), len(artistasUnicos2)
+
+# requerimiento 4
+
+
+
+# ========================
 # Funciones de Comparacion
-# ==============================
+# ========================
 
 
 def compareIds(id1, id2):
