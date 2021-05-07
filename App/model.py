@@ -30,6 +30,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
+from DISClib.DataStructures import listiterator as it
 from DISClib.Algorithms.Sorting import shellsort as sa
 import datetime
 assert cf
@@ -513,8 +514,9 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
 
 #requerimiento 2 
 def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
-    tracksUnicos = set()
+    tracksUnicos = lt.newList('SINGLE_LINKED')
     tracksUnicos2 = set()
+    tracksUnicos3 = set()
     entry1_energy = mp.get(catalog['caraContenido'], 'energy')
     arbol_energy = me.getValue(entry1_energy)
     lista_valuesEnergy = om.values(arbol_energy, valor_minEnergy, valor_maxEnergy)
@@ -528,21 +530,22 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
         iterador_lista = it.newIterator(elementos)
         while it.hasNext(iterador_lista):
             dato = it.next(iterador_lista)
-            tracks_id = dato['track_id']
-            if tracks_id not in tracksUnicos:
-                tracksUnicos.add(artistas_id)
+            if (dato['energy'] >= valor_minEnergy and dato['energy'] <= valor_maxEnergy):
+                tracks_id = dato['track_id']
+                if tracks_id not in tracksUnicos:
+                    lt.addLast(tracksUnicos, tracks_id)
     iterador_danceability = it.newIterator(lista_valuesDanceability)
-    while it.hasnext(iterador_danceability):
+    while it.hasNext(iterador_danceability):
         datos2 = it.next(iterador_danceability)
         elementos2 = datos 
         iterador_lista2 = it.newIterator(elementos2)
         while it.hasNext(iterador_lista2):
             dato2 = it.next(iterador_lista2)
-            tracks_id2 = dato['track_id']
-            if tracks_id2 not in artistasUnicos2:
-                tracksUnicos2.add(artistas_id2)
-
-    return len(tracksUnicos), len(tracksUnicos2)
+            if (dato2['danceability'] >= valor_minDanceability) and (dato2['danceability'] <= valor_maxDanceability):
+                tracks_id2 = dato2['track_id']
+                if tracks_id2 not in tracksUnicos:
+                    lt.addLast(tracksUnicos, tracks_id2)
+    #return len(tracksUnicos)
     
 
 # ==============================
