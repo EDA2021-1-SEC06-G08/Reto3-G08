@@ -56,7 +56,7 @@ def newCatalog():
                'musicalGenero': None,
                'fechaMusica': None}
 
-    catalog['videosContext'] = lt.newList('SINGLE_LINKED', compareIds)
+    catalog['videosContext'] = lt.newList('SINGLE_LINKED')
     catalog['caraContenido'] = mp.newMap(30,
                                             maptype='PROBING',
                                             loadfactor=0.4)
@@ -76,6 +76,7 @@ def newCatalog():
 
 def addMusicaContext(catalog, musica):
     """
+    Agrega una cancion a la lista de canciones
     """
     lt.addLast(catalog['videosContext'], musica)
     
@@ -490,7 +491,6 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     artistasUnicos = set()
     entry = mp.get(catalog['caraContenido'], caracteristica)
     arbol = me.getValue(entry)
-    lista_llaves = om.keys(arbol, valor_min, valor_max)
     lista_artistas = om.values(arbol, valor_min, valor_max)
     iterador = it.newIterator(lista_artistas)
     while it.hasNext(iterador):  

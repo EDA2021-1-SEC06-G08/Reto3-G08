@@ -70,9 +70,10 @@ def loadVideosContext(catalog):
     model.CrearLlaveMusicaContext(catalog)
     model.CrearLlaveMusicaGenero(catalog)
     for musica in input_file:
+        model.addMusicaContext(catalog, musica)
         model.addMapMusicaContext(catalog, musica)
         model.addMapMusicaGenero(catalog, musica)
-       # model.addMapMusicaFechas(catalog, musica)
+        model.addMapMusicaFechas(catalog, musica)
 
 def loadVideosEtiquetas(catalog):
     """
