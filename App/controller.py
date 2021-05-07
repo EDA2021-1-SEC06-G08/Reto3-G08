@@ -87,10 +87,10 @@ def loadVideosEtiquetas(catalog):
         model.addVideoEtiquetas(catalog, video)
 
 
-
 # ========================
 # Funciones para consultas
 # ========================
+
 
 #requerimiento 1
 
