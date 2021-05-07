@@ -155,6 +155,7 @@ while True:
         loadData(catalog)
     if int(inputs[0]) == 2:
         print("\nCargando información de los archivos ....")
+        desarrollo(catalog)
     elif int(inputs[0]) == 3:
         caracteristica = input('Inserte la característica: ')
         valor_min = input('Inserte el valor mínimo: ')
