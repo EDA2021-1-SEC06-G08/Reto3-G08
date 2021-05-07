@@ -163,9 +163,14 @@ def organizar_req2(lista):
               + str(track['energy']) + 'and' + 'danceability of' + str(track['danceability']))
         i += 1
 
-#requerimiento3
+#requerimiento 3
+
+#requerimiento 4
+
+#requerimiento 5
 
 catalog = None
+
 """
 Menu principal
 """
