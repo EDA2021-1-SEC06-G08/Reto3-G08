@@ -94,8 +94,8 @@ while True:
         valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
         valor_minDanceability = input('Inserte el valor mínimo de Danceability: ')
         valor_maxDanceability = input('Inserte el valor máximo de Danceability: ')
-        musica(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
         print("\nCargando información de los videos ....")
+        
     elif int(inputs[0]) == 4:
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 5:
