@@ -532,7 +532,7 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
             if artistas_id not in artistasUnicos:
                 artistasUnicos.add(artistas_id)
     iterador_danceability = it.newIterator(lista_valuesDanceability)
-    while it.hasnext(iterador_danceability):
+    while it.hasNext(iterador_danceability):
         datos2 = it.next(iterador_danceability)
         elementos2 = datos 
         iterador_lista2 = it.newIterator(elementos2)
