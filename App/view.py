@@ -128,6 +128,14 @@ def desarrollo(catalog):
 
 catalog = None
 
+def organizar_req2(lista):
+    print('Total of unique tracks in events: ', lt.size(lista))
+    i = 1
+    while i <= 5:
+        track = lt.getElement(lista, i)
+        print("Track", i, ':', track['track_id'], 'with energy of', track['energy'], 'and', 'danceability of', track['danceability'])
+        i += 1
+
 """
 Menu principal
 """
@@ -148,7 +156,7 @@ while True:
         valor_maxDanceability = input('Inserte el valor máximo de Danceability: ')
         print("\nCargando información de los videos ....")
         respuesta = controller.requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
-        print(respuesta)
+        organizar_req2(respuesta)
     elif int(inputs[0]) == 4:
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 5:
