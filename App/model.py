@@ -564,7 +564,7 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
         iterador_lista = it.newIterator(elementos)
         while it.hasNext(iterador_lista):
             dato = it.next(iterador_lista)
-            artistas_id = dato['artist_id']
+            artistas_id = dato['track_id']
             if artistas_id not in artistas_unicos:
                 artistasUnicos.add(artistas_id)
     iterador_instrumentalness = it.newIterator(lista_valuesInstrumentalness)
@@ -574,7 +574,7 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
         iterador_lista2 = it.newIterator(elementos2)
         while it.hasNext(iterador_lista2):
             dato2 = it.next(iterador_lista2)
-            artistas_id2 = dato['artist_id']
+            artistas_id2 = dato['track_id']
             if artistas_id2 not in artistasUnicos2:
                 artistasUnicos2.add(artistas_id2)
 
