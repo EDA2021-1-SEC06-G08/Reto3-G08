@@ -159,8 +159,8 @@ def organizar_req2(lista):
     while i <= 5:
         intRandom = random.randint(0, int(lt.size(lista))-1)
         track = lt.getElement(lista, intRandom)
-        print("Track" + str(intRandom) + ':' + str(track['track_id']) + 'with energy of' 
-              + str(track['energy']) + 'and' + 'danceability of' + str(track['danceability']))
+        print("Track" + ' ' + str(intRandom) + ' :' + ' ' + str(track['track_id']) + ' with energy of' + ' '
+              + str(track['energy']) + ' and danceability of ' + str(track['danceability']))
         i += 1
 
 #requerimiento 3
@@ -181,8 +181,8 @@ while True:
         print("\nCargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-    if int(inputs[0]) == 2:
-        print("\nCargando información de los archivos ....")
+    elif int(inputs[0]) == 2: #Da los resultados de la parte 2 del desarrollo
+        print("\nCargando información de los videos ....")
         desarrollo(catalog)
     elif int(inputs[0]) == 3:
         caracteristica = input('Inserte la característica: ')
@@ -190,8 +190,8 @@ while True:
         valor_max = input('Inserte el valor máximo: ')
         print("\nCargando información de los videos ....")
         respuesta = requerimiento1(caracteristica, valor_min, valor_max, catalog)
-        print(str(caracteristica) + 'is between' + str(valor_min) + 'and' + str(valor_max))
-        print('Total of reproduction: ' + str(respuesta[0]) + 'Total of unique artists: ' + str(respuesta[1]))    
+        print(str(caracteristica) + ' ' + 'is between' + ' ' + str(valor_min) + ' ' + 'and' + ' ' + str(valor_max))
+        print('Total of reproduction: ' + str(respuesta[0]) + ' ' + 'Total of unique artists: ' + str(respuesta[1]))
     elif int(inputs[0]) == 4:
         valor_minEnergy = input('Inserte el valor mínimo de Energy: ')
         valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
