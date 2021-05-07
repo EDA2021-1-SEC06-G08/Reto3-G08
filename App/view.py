@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.DataStructures import listiterator as it
 assert cf
 
 
@@ -41,23 +42,89 @@ def printMenu():
     print("=======================================")
     print("Bienvenido")
     print("1- Cargar información de la musica")
-    print("2- Caracterizar las reproducciones")
-    print("3- Encontrar musica para festejar")
-    print("4- Encontrar musica para estudiar")
-    print("5- Estudiar los generos musicales")
-    print("6- Indicar el genero musical mas escuchado en el tiempo")
+    print("2- Datos interesantes")
+    print("3- Caracterizar las reproducciones")
+    print("4- Encontrar musica para festejar")
+    print("5- Encontrar musica para estudiar")
+    print("6- Estudiar los generos musicales")
+    print("7- Indicar el genero musical mas escuchado en el tiempo")
     print("0- Salir")
     print("=======================================")
 
+#===========================
+#IMPLEMENTACION DEL CATALOGO
+#===========================
+
 def initCatalog():
     """
+    Inicializa el catalogo de la musica
     """
     return controller.initCatalog()
 
 def loadData(catalog):
     """
+    Carga los videos en la estructura de datos
     """
     controller.loadData(catalog)
+
+
+#===============================
+#FUNCIONES DATOS DE LOS ARCHIVOS
+#===============================
+
+def artista_unico(catalog):
+    """
+    Da la cantidad de artistas unicos
+    """
+    artistasNoRepetidos = lt.newList('SINGLE_LINKED')
+    iterator = it.newIterator(catalog['videosContext'])
+    while it.hasNext(iterator):
+        musica = it.next(iterator)
+        if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+            lt.addLast(artistasNoRepetidos, musica['artist_id'])
+    print("La cantidad de artistas unicos es: " +  str(lt.size(artistasNoRepetidos)))
+
+def canciones_unicas(catalog):
+    """
+    Da la cantidad de canciones unicas
+    """
+    cancionesNoRepetidas = lt.newList('SINGLE_LINKED')
+    iterator = it.newIterator(catalog['videosContext'])
+    while it.hasNext(iterator):
+        musica = it.next(iterator)
+        if int(lt.isPresent(cancionesNoRepetidas, musica['track_id'])) == 0:
+            lt.addLast(cancionesNoRepetidas, musica['track_id'])
+    print("La cantidad de canciones unicas es: " +  str(lt.size(cancionesNoRepetidas)))
+
+def losCincos(catalog):
+    """
+    Retorna los primeros 5 videos y los ultimos 5 videos
+    """
+    size = lt.size(catalog['videosContext'])
+    i=0
+    j=int(size)-5
+    while i <= 4:
+        musica = lt.getElement(catalog['videosContext'], i)
+        print("\n=====================")
+        print(musica) 
+        print("\n=====================")
+        i += 1
+    
+    while j <= (int(size)-1):
+        musica = lt.getElement(catalog['videosContext'], j)
+        print("\n=====================")
+        print(musica) 
+        print("\n=====================")
+        j += 1
+
+def desarrollo(catalog):
+    """
+    """
+    print("La cantidad de eventos escuchados es: " + str(lt.size(catalog['videosContext'])))
+    artista_unico(catalog)
+    canciones_unicas(catalog)
+    losCincos(catalog)
+
 
 catalog = None
 
@@ -67,25 +134,13 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    if int(inputs[0]) == 1: #Inicializa el catalogo y Mete los datos
         print("\nCargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
-        """
-        print('Videos cargados: ' + str(controller.videosSize(cont)))
-        print('Altura del arbol: ' + str(controller.indexHeight(cont)))
-        print('Elementos en el arbol: ' + str(controller.indexSize(cont)))
-        print('Menor Llave: ' + str(controller.minKey(cont)))
-        print('Mayor Llave: ' + str(controller.maxKey(cont)))
-        """
-    elif int(inputs[0]) == 2:
-        caracteristica = input('Inserte la característica: ')
-        valor_min = input('Inserte el valor mínimo: ')
-        valor_max = input('Inserte el valor máximo: ')
-        respuesta = controller.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
-        print(caracteristica, 'is between', valor_min, 'and', valor_max)
-        print('Total of reproduction: ',respuesta[0], 'Total of unique artists: ', respuesta[1])
-        
+    elif int(inputs[0]) == 2: #Da los resultados de la parte 2 del desarrollo
+        print("\nCargando información de los videos ....")
+        desarrollo(catalog)
     elif int(inputs[0]) == 3:
         valor_minEnergy = input('Inserte el valor mínimo de Energy: ')
         valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
@@ -99,6 +154,8 @@ while True:
     elif int(inputs[0]) == 5:
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 6:
+        print("\nCargando información de los videos ....")
+    elif int(inputs[0]) == 7:
         print("\nCargando información de los videos ....")
     else:
         sys.exit(0)
