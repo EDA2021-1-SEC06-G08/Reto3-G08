@@ -147,7 +147,7 @@ while True:
         loadData(catalog)
     elif int(inputs[0]) == 2: #Da los resultados de la parte 2 del desarrollo
         print("\nCargando información de los videos ....")
-        desarrollo(catalog)
+        desarrollo(catalog) 
     elif int(inputs[0]) == 3:
         valor_minEnergy = input('Inserte el valor mínimo de Energy: ')
         valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
