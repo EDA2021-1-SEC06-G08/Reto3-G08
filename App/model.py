@@ -283,191 +283,155 @@ def CrearLlaveMusicaGenero(catalog):
              'R&B' , 'Rock' , 'Metal']
     
     for genero in Lista:
-        mp.put(catalog['musicaGenero'], genero, om.newMap('RBT'))
+        mp.put(catalog['musicaGenero'], genero, lt.newList('ARRAY_LIST'))
 
-def addMapMusicaGenero(catalog, musica):
+def addMapMusicaGenero(catalog):
     """
-    Agrega los RBT de la tabla de hash de los generos
+    Agrega las listas a la tabla de hash de los generos
     """
     #Reggae
-    RBTreggaeEntry = mp.get(catalog['musicaGenero'], 'Reggae')
-    RBTreggae = me.getValue(RBTreggaeEntry)        
-    EstaKey = om.contains(RBTreggae, musica['tempo'])
 
-    if not(EstaKey) and (float(musica['tempo']) >= 60 and float(musica['tempo']) <= 90):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTreggae, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTreggae, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTreggae, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Reggae', RBTreggae)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTreggae, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTreggae, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Reggae', RBTreggae)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 60, 90)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Reggae')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Reggae', listgenero)
     
     #Down-tempo
-    RBTdown_tempoEntry = mp.get(catalog['musicaGenero'], 'Down-tempo')
-    RBTdown_tempo = me.getValue(RBTdown_tempoEntry)        
-    EstaKey = om.contains(RBTdown_tempo, musica['tempo'])
 
-    if not(EstaKey) and (float(musica['tempo']) >= 70 and float(musica['tempo']) <= 100):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTdown_tempo, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTdown_tempo, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Down-tempo', RBTdown_tempo)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTdown_tempo, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTdown_tempo, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Down-tempo', RBTdown_tempo)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 70, 100)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Down-tempo')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Down-tempo', listgenero)
     
     #Chill-out
-    RBTchill_outEntry = mp.get(catalog['musicaGenero'], 'Chill-out')
-    RBTchill_out = me.getValue(RBTchill_outEntry)        
-    EstaKey = om.contains(RBTchill_out, musica['tempo'])
 
-    if not(EstaKey) and (float(musica['tempo']) >= 90 and float(musica['tempo']) <= 120):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTchill_out, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTchill_out, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTchill_out, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Chill-out', RBTchill_out)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTchill_out, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTchill_out, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Chill-out', RBTchill_out)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 90, 120)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Chill-out')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Chill-out', listgenero)
 
     #Hip-hop
-    RBThip_hopEntry = mp.get(catalog['musicaGenero'], 'Hip-hop')
-    RBThip_hop = me.getValue(RBThip_hopEntry)        
-    EstaKey = om.contains(RBThip_hop, musica['tempo'])
 
-    if not(EstaKey) and (float(musica['tempo']) >= 85 and float(musica['tempo']) <= 115):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBThip_hop, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBThip_hop, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBThip_hop, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Hip-hop', RBThip_hop)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBThip_hop, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBThip_hop, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Hip-hop', RBThip_hop)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 85, 115)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Hip-hop')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Hip-hop', listgenero)
     
     #Jazz and Funk 
-    RBTjazzandfunkEntry = mp.get(catalog['musicaGenero'], 'Jazz and Funk')
-    RBTjazzandfunk = me.getValue(RBTjazzandfunkEntry)        
-    EstaKey = om.contains(RBTjazzandfunk, musica['tempo'])
 
-    if not(EstaKey) and (float(musica['tempo']) >= 120 and float(musica['tempo']) <= 125):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTjazzandfunk, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTjazzandfunk, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTjazzandfunk, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Jazz and Funk', RBTjazzandfunk)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTjazzandfunk, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTjazzandfunk, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Jazz and Funk', RBTjazzandfunk)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 120, 125)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Jazz and Funk ')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Jazz and Funk ', listgenero)
     
     #Pop
-    RBTpopEntry = mp.get(catalog['musicaGenero'], 'Pop')
-    RBTpop = me.getValue(RBTpopEntry)        
-    EstaKey = om.contains(RBTpop, musica['tempo'])
 
-    if not(EstaKey) and (float(musica['tempo']) >= 100 and float(musica['tempo']) <= 130):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTpop, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTpop, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTpop, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Pop', RBTpop)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTpop, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTpop, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Pop', RBTpop)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 100, 130)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Pop')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Pop', listgenero)
     
     #R&B
-    RBTrandbEntry = mp.get(catalog['musicaGenero'], 'R&B')
-    RBTrandb = me.getValue(RBTrandbEntry)   
 
-    EstaKey = om.contains(RBTrandb, musica['tempo'])
-    if not(EstaKey) and (float(musica['tempo']) >= 60 and float(musica['tempo']) <= 80):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTrandb, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTrandb, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTrandb, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'R&B', RBTrandb)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTrandb, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTrandb, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'R&B', RBTrandb)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 60, 80)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'R&B')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'R&B', listgenero)
 
     #Rock
-    RBTrockEntry = mp.get(catalog['musicaGenero'], 'Rock')
-    RBTrock = me.getValue(RBTrockEntry)  
 
-    EstaKey = om.contains(RBTrock, musica['tempo'])
-    if not(EstaKey) and (float(musica['tempo']) >= 110 and float(musica['tempo']) <= 140):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTrock, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTrock, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTrock, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Rock', RBTrock)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTrock, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTrock, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Rock', RBTrock)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 110, 140)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Rock')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Rock', listgenero)
 
     #Metal
-    RBTmetalEntry = mp.get(catalog['musicaGenero'], 'Metal')
-    RBTmetal = me.getValue(RBTmetalEntry)   
 
-    EstaKey = om.contains(RBTmetal, musica['tempo'])
-    if not(EstaKey) and (float(musica['tempo']) >= 110 and float(musica['tempo']) <= 140):
-        ArtistList = lt.newList('SINGLE_LINKED')
-        om.put(RBTmetal, musica['tempo'], ArtistList)
-        ListaArtistaEntry = om.get(RBTmetal, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTmetal, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Rock', RBTmetal)
-    elif EstaKey:
-        ListaArtistaEntry = om.get(RBTmetal, musica['tempo'])
-        ListaArtista = me.getValue(ListaArtistaEntry)
-        lt.addLast(ListaArtista, musica)
-        om.put(RBTmetal, musica['tempo'], ListaArtista)
-        mp.put(catalog['musicaGenero'], 'Metal', RBTmetal)
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    lista_listas_musica = om.values(RBTtempo, 100, 160)
+    listas_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(listas_musica):            
+        listas_musicas = it.next(iterator)
+        lista_musica = it.newIterator(listas_musicas)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)                
+            listgeneroEntry = mp.get(catalog['musicaGenero'], 'Metal')
+            listgenero = me.getValue(listgeneroEntry)
+            lt.addLast(listgenero, musica)
+            mp.put(catalog['musicaGenero'], 'Metal', listgenero)
     
 
 def addMapMusicaFechas(catalog, musica):
@@ -545,10 +509,88 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
                     lt.addLast(canciones, dato)
     return tracksUnicos, canciones
     
-
 #requerimiento 3
 
+def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog):
+    """
+    Retorna una lista con las canciones 
+    """
+    tracksUnicos = lt.newList('ARRAY_LIST')
+    canciones = lt.newList('ARRAY_LIST')
+    MapInstrumentalness = mp.get(catalog['caraContenido'], 'instrumentalness')
+    RBTInstrumentalness = me.getValue(MapInstrumentalness)
+    lista_listas_Instrumentalness = om.values(RBTInstrumentalness, valor_minInstrumentalness, valor_maxInstrumentalness)               
+    lista_Instrumentalness = it.newIterator(lista_listas_Instrumentalness)
+    while it.hasNext(lista_Instrumentalness):
+        listas_musica = it.next(lista_Instrumentalness) 
+        musicas = it.newIterator(listas_musica)
+        while it.hasNext(musicas):
+            musica = it.next(musicas)
+            if (musica['tempo'] >= valor_minTempo and musica['tempo'] <= valor_maxTempo):
+                if int(lt.isPresent(tracksUnicos, musica['track_id'])) == 0:
+                    lt.addLast(tracksUnicos, musica['track_id'])
+                    lt.addLast(canciones, musica)
+                else:
+                    lt.addLast(canciones, musica)
+    return canciones,tracksUnicos
+
 #requerimiento 4
+
+def introducir_Newgenero(genero, tempomin, tempomax, catalog):
+    """
+    """
+    generoEsta = mp.contains(catalog['musicaGenero'], genero)
+    if not(generoEsta):
+        mp.put(catalog['musicaGenero'], genero, lt.newList('ARRAY_LIST'))
+        RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+        RBTtempo = me.getValue(RBTtempoEntry)
+        lista_listas_musica = om.values(RBTtempo, tempomin, tempomax)
+        listas_musica = it.newIterator(lista_listas_musica)
+        while it.hasNext(listas_musica):
+            listas_musicas = it.next(iterator)
+            lista_musica = it.newIterator(listas_musicas)
+            while it.hasNext(lista_musica):
+                musica = it.next(lista_musica)
+                listgeneroEntry = mp.get(catalog['musicaGenero'], genero)
+                listgenero = me.getValue(listgeneroEntry)
+                lt.addLast(listgenero, musica)
+                mp.put(catalog['musicaGenero'], genero, listgenero)
+    else:
+        print("Ya existe el genero")
+
+def musica_req4(catalog, generos):
+    """
+    """
+    # crear lista de repetidos total
+    lista_musica_repetidos_total = lt.newList('ARRAY_LIST')
+    resultados = lt.newList('ARRAY_LIST')
+    # saco los generos
+    list_generos = generos.split(",")
+    # itero sobre los generos
+    for genero in list_generos:
+        # crear lsita de repetidos parciales y no repetidos
+        lista_artista_norepetidos = lt.newList('ARRAY_LIST')
+        lista_musica_repetidos_parcial = lt.newList('ARRAY_LIST')
+        # obtengo la lista del genero
+        List_musica_generoEntry = mp.get(catalog['musicaGenero'], genero)
+        lista_musica_genero = me.getValue(List_musica_generoEntry)
+        #itero sobre a listaque contiene el genero
+        musica_genero = it.newIterator(lista_musica_genero)
+        while it.hasNext(musica_genero):
+            musica = it.next(musica_genero)
+            # introduzco el tamanio
+            if int(lt.isPresent(lista_artista_norepetidos, musica['artist_id'])) == 0:
+                lt.addLast(lista_artista_norepetidos, musica['artist_id'])
+                lt.addLast(lista_musica_repetidos_total, musica)
+                lt.addLast(lista_musica_repetidos_parcial, musica)
+            else:
+                lt.addLast(lista_musica_repetidos_total, musica)
+                lt.addLast(lista_musica_repetidos_parcial, musica)
+        total_musica_repetidos_parcial = lt.size(lista_musica_repetidos_parcial)
+        lt.addLast(resultados, (total_autores_norepetidos, lista_artista_norepetidos))
+    total_reproducciones = lt.size(lista_musica_repetidos_total)
+
+    return total_reproducciones, resultados
 
 #requerimiento 5
 
