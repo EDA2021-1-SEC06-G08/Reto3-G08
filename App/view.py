@@ -154,7 +154,6 @@ def organizar_req2(lista):
     """
     Organiza el total y el valor de informacion de la musica
     """
-    print('Total of unique tracks in events: ' + str(lt.size(lista)))
     i = 1
     while i <= 5:
         intRandom = random.randint(0, int(lt.size(lista))-1)
@@ -199,7 +198,8 @@ while True:
         valor_maxDanceability = input('Inserte el valor máximo de Danceability: ')
         print("\nCargando información de los videos ....")
         respuesta = requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
-        organizar_req2(respuesta)
+        print('Total of unique tracks in events: ' + str(lt.size(respuesta[0])))
+        organizar_req2(respuesta[1])
     elif int(inputs[0]) == 5:
         print("\nCargando información de los videos ....")
     elif int(inputs[0]) == 6:
