@@ -186,24 +186,11 @@ def organizar_req3(lista):
 
 #requerimiento 4
 
-def requerimiento4NewGenero(genero, tempomin, tempomax, catalog):
+def requerimiento4NewGenero(tempomin, tempomax, catalog):
     """
     Da una tupla que contiene la cantidad de reproducciones para el genero y la lista con los autores
     """
-    return controller.requerimiento4NewGenero(genero, tempomin, tempomax, catalog)
-
-def organizar_req4(lista, tempomin, tempomax, genero):
-    """
-    """
-    print('===========' + str(genero) + '============')
-    print('For ' + str(genero) + 'the tempo is between ' + str(tempomin) + ' and ' + str(tempomax) + ' BPM')
-    print('Total of reproductions: ' + str(lista[0]) + ' with ' + str(lt.size(lista[1])) + ' different artists')
-    print('---------------  Some artists for ' + str(genero) + ' -----------')
-    i = 0
-    while i <= 9:
-        print('Artist ' + str(i) + ' : ' + lt.getElement(lista[1], i))
-
-
+    return controller.requerimiento4NewGenero(tempomin, tempomax, catalog)
 
 #requerimiento 5
 
@@ -249,16 +236,23 @@ while True:
         organizar_req3(respuesta)
     elif int(inputs[0]) == 6:
         while True:
-            inputz = input("Introduzca 1 si quiere buscar un nuevo genero o 2 si quiere buscar algun genero existente: ")
+            inputz = input("Introduzca 0 si quiere salir, 1 si quiere buscar un nuevo genero o 2 si quiere buscar algun genero existente: ")
             if int(inputz[0]) == 1:
                 genero = input("Introduzca el genero: ")
-                tempomin = input("Introduzca el tempo minimo: ")
-                tempomax = input("Introduzca el tempo maximo: ")
+                valor_min = input("Introduzca el tempo minimo: ")
+                valor_max = input("Introduzca el tempo maximo: ")
                 print("\nCargando información de los videos ....")
-                lista = requerimiento4NewGenero(genero, tempomin, tempomax, catalog)
-                organizar_req4(lista, tempomin, tempomax, genero)
+                respuesta = requerimiento4NewGenero(valor_min, valor_max, catalog)
+                print(str(genero) + ' is between ' + str(valor_min) + ' and ' + str(valor_max))
+                print('Total of reproduction: ' + str(lt.size(respuesta[0])) + ' Total of unique artists: ' + str(lt.size(respuesta[1])))
+                print('---------------  Some artists for ' + str(genero) + ' -----------')
+                i = 0
+                while i <= 9:
+                    print('Artist ' + str(i) + ': ' + lt.getElement(respuesta[1], i))
+                    i += 1
             elif int(inputz[0]) == 2:
-                generos = input("Introduzca los generos: ")
+                generos = input("Introduzca los generos pegados y separado por comas: ")
+                
 
             else:
                 sys.exit(0)

@@ -118,15 +118,12 @@ def requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, va
 
 #requerimiento 4
 
-def requerimiento4NewGenero(genero, tempomin, tempomax, catalog):
+def requerimiento4NewGenero(tempomin, tempomax, catalog):
     """
     Introduce un genero a la tabla de generos
     """
-    model.buscar_Newgenero(genero, tempomin, tempomax, catalog)
+    return model.buscar_Newgenero(tempomin, tempomax, catalog)
 
-def requerimiento4():
-    """
-    """
     
 
 #requerimiento 5
