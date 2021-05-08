@@ -19,10 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
 import config as cf
 import model
 import csv
+
 
 
 """
@@ -98,18 +98,24 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     """
     Obtiene la informacion del requerimiento 1
     """
-    return model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
-
+    return  model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
 #requerimiento 2 
 
 def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog):
     """
     Obtiene la informacion del requerimiento 2
     """
+    
     return model.musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
-
 #requerimiento 3
 
 #requerimiento 4
 
 #requerimiento 5
+
+
+# ======================================
+# Funciones para medir tiempo y memoria
+# ======================================
+
+
