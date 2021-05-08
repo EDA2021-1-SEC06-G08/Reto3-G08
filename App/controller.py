@@ -122,7 +122,7 @@ def requerimiento4NewGenero(genero, tempomin, tempomax, catalog):
     """
     Introduce un genero a la tabla de generos
     """
-    model.introducir_Newgenero(genero, tempomin, tempomax, catalog)
+    model.buscar_Newgenero(genero, tempomin, tempomax, catalog)
 
 def requerimiento4():
     """
