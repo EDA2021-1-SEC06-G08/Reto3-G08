@@ -192,6 +192,11 @@ def requerimiento4NewGenero(tempomin, tempomax, catalog):
     """
     return controller.requerimiento4NewGenero(tempomin, tempomax, catalog)
 
+def requerimiento4(catalog, generos):
+    """
+    Regresa en modo print la informacion
+    """
+    return controller.requerimiento4(catalog, generos)
 #requerimiento 5
 
 catalog = None
@@ -252,11 +257,10 @@ while True:
                     i += 1
             elif int(inputz[0]) == 2:
                 generos = input("Introduzca los generos pegados y separado por comas: ")
-                
-
+                print("\nCargando información de los videos ....")
+                requerimiento4(catalog, generos)
             else:
                 sys.exit(0)
-        sys.exit(0)
     elif int(inputs[0]) == 7:
         print("\nCargando información de los videos ....")
     else:

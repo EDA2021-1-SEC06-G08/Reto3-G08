@@ -521,7 +521,7 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
         musicas = it.newIterator(lista_musica)
         while it.hasNext(musicas):
             musica = it.next(musicas) #iterar sobre esta lista por artist_id
-            if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+            if int(lt.isPresent(artistasNoRepetidos, (musica['artist_id']))) == 0:
                lt.addLast(artistasNoRepetidos, musica['artist_id'])
                lt.addLast(artistasRepetidos, musica['artist_id'])
             else:
@@ -587,9 +587,9 @@ def buscar_Newgenero(tempomin, tempomax, catalog):
     """
     artistasNoRepetidos = lt.newList('ARRAY_LIST')
     artistasRepetidos = lt.newList('ARRAY_LIST')
-    MapCaracteristicas = mp.get(catalog['caraContenido'], 'tempo')
-    RBTcaracteristica = me.getValue(MapCaracteristicas)
-    lista_listas_musica = om.values(RBTcaracteristica, tempomin, tempomax)
+    MapGeneros = mp.get(catalog['caraContenido'], 'tempo')
+    RBTgenero = me.getValue(MapGeneros)
+    lista_listas_musica = om.values(RBTgenero, tempomin, tempomax)
     lista_lista_musica = it.newIterator(lista_listas_musica)
     while it.hasNext(lista_lista_musica):  
         lista_musica = it.next(lista_lista_musica)
@@ -602,6 +602,42 @@ def buscar_Newgenero(tempomin, tempomax, catalog):
             else:
                 lt.addLast(artistasRepetidos, musica)
     return artistasRepetidos, artistasNoRepetidos
+
+def generos_existentes(catalog, generos):
+    """
+    Retorna en modo print la informacion de los generos
+    """
+    lista_repetidos_total = lt.newList('ARRAY_LIST')
+    list_generos = generos.split(",")
+    for genero in list_generos:
+        artistasNoRepetidos = lt.newList('ARRAY_LIST')
+        artistasRepetidos = lt.newList('ARRAY_LIST')
+        MapGeneros = mp.get(catalog['musicaGenero'], genero)
+        RBTgenero = me.getValue(MapGeneros)
+        valor_min = om.minKey(RBTgenero)
+        valor_max = om.maxKey(RBTgenero)
+        lista_listas_musica = om.values(RBTgenero, valor_min, valor_max)
+        lista_lista_musica = it.newIterator(lista_listas_musica)
+        while it.hasNext(lista_lista_musica):  
+            lista_musica = it.next(lista_lista_musica)
+            musicas = it.newIterator(lista_musica)
+            while it.hasNext(musicas):
+                musica = it.next(musicas)
+                if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+                    lt.addLast(artistasNoRepetidos, musica['artist_id'])
+                    lt.addLast(artistasRepetidos, musica)
+                    lt.addLast(lista_repetidos_total, musica)
+                else:
+                    lt.addLast(artistasRepetidos, musica)
+                    lt.addLast(lista_repetidos_total, musica)
+        print(str(genero) + ' is between ' + str(valor_min) + ' and ' + str(valor_max))
+        print('Total of reproduction: ' + str(lt.size(artistasRepetidos)) + ' Total of unique artists: ' + str(lt.size(artistasNoRepetidos)))                
+        print('---------------  Some artists for ' + str(genero) + ' -----------')
+        i = 0
+        while i <= 9:
+            print('Artist ' + str(i) + ': ' + lt.getElement(artistasNoRepetidos, i))
+            i += 1
+    print(lt.size(lista_repetidos_total))
 
 #requerimiento 5
 
