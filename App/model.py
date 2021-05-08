@@ -579,27 +579,28 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
 
 #requerimiento 4
 
-def introducir_Newgenero(genero, tempomin, tempomax, catalog):
+def buscar_Newgenero(tempomin, tempomax, catalog):
     """
+    retorna una tupla con la lista de los autores y la cantidad de reproducciones
     """
-    generoEsta = mp.contains(catalog['musicaGenero'], genero)
-    if not(generoEsta):
-        mp.put(catalog['musicaGenero'], genero, lt.newList('ARRAY_LIST'))
-        RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
-        RBTtempo = me.getValue(RBTtempoEntry)
-        lista_listas_musica = om.values(RBTtempo, tempomin, tempomax)
-        listas_musica = it.newIterator(lista_listas_musica)
-        while it.hasNext(listas_musica):
-            listas_musicas = it.next(iterator)
-            lista_musica = it.newIterator(listas_musicas)
-            while it.hasNext(lista_musica):
-                musica = it.next(lista_musica)
-                listgeneroEntry = mp.get(catalog['musicaGenero'], genero)
-                listgenero = me.getValue(listgeneroEntry)
-                lt.addLast(listgenero, musica)
-                mp.put(catalog['musicaGenero'], genero, listgenero)
-    else:
-        print("Ya existe el genero")
+    lista_artista_norepetidos = lt.newList('ARRAY_LIST')
+    lista_artista_repetidos = lt.newList('ARRAY_LIST')
+
+    RBTtempoEntry = mp.get(catalog['caraContenido'], 'tempo')
+    RBTtempo = me.getValue(RBTtempoEntry)
+    list_listas_tempo = om.values(RBTtempo, tempomin, tempomax)
+    list_listas_tempo_iterator = it.newIterator(list_listas_tempo)
+    while it.hasNext(list_listas_tempo_iterator):
+        lista_tempo = it.next(list_listas_tempo_iterator)
+        lista_musica = it.newIterator(lista_tempo)
+        while it.hasNext(lista_musica):
+            musica = it.next(lista_musica)
+            if int(lt.isPresent(lista_artista_norepetidos, musica['artist_id'])) == 0:
+                lt.addLast(lista_artista_norepetidos, musica['artist_id'])
+                lt.addLast(lista_artista_repetidos, musica)
+            else:
+                lt.addLast(lista_artista_repetidos, musica)
+    return int(lt.size(lista_artista_repetidos)), lista_artista_norepetidos
 
 def musica_req4(catalog, generos):
     """
