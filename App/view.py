@@ -160,13 +160,35 @@ def organizar_req2(lista):
     while i <= 5:
         intRandom = random.randint(0, int(lt.size(lista))-1)
         track = lt.getElement(lista, intRandom)
-        print("Track" + ' ' + str(intRandom) + ' :' + ' ' + str(track['track_id']) + ' with energy of' + ' '
+        print("Track" + ' ' + str(intRandom) + ' :' + ' ' + str(track['track_id']) + ' with energy of '
               + str(track['energy']) + ' and danceability of ' + str(track['danceability']))
         i += 1
 
 #requerimiento 3
 
+def requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog):
+    """
+    LLama la funcion del requerimiento 3 del controller
+    """
+    return controller.requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
+
+def organizar_req3(lista):
+    """
+    Organiza el total y el valor de informacion de la musica
+    """
+    print('Total of unique tracks in events: ' + str(lt.size(lista[1])))
+    i = 1
+    while i <= 5:
+        intRandom = random.randint(0, int(lt.size(lista[0]))-1)
+        track = lt.getElement(lista[0], intRandom)
+        print("Track" + ' ' + str(intRandom) + ' :' + ' ' + str(track['track_id']) + ' with tempo of '
+              + str(track['tempo']) + ' and instrumentalness of ' + str(track['instrumentalness']))
+        i += 1
+
 #requerimiento 4
+
+def requerimiento4NewGenero(genero, tempomin, tempomax, catalog):
+    controller.requerimiento4NewGenero(genero, tempomin, tempomax, catalog)
 
 #requerimiento 5
 
@@ -202,9 +224,28 @@ while True:
         respuesta = requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
         organizar_req2(respuesta)
     elif int(inputs[0]) == 5:
+        valor_minTempo = input('Inserte el valor mínimo de Tempo: ')
+        valor_maxTempo = input('Inserte el valor máximo de Tempo: ')
+        valor_minInstrumentalness = input('Inserte el valor mínimo de Instrumentalness: ')
+        valor_maxInstrumentalness = input('Inserte el valor máximo de Instrumentalness: ')
         print("\nCargando información de los videos ....")
+        respuesta = requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
+        organizar_req3(respuesta)
     elif int(inputs[0]) == 6:
-        print("\nCargando información de los videos ....")
+        while True:
+            inputz = input("Introduzca 1 si quiere introducir un nuevo genero o 2 si quiere buscar algun genero: ")
+            if int(inputz[0]) == 1:
+                genero = input("Introduzca el genero: ")
+                tempomin = input("Introduzca el tempo minimo: ")
+                tempomax = input("Introduzca el tempo maximo: ")
+                print("\nCargando información de los videos ....")
+                requerimiento4NewGenero(genero, tempomin, tempomax, catalog)
+            elif int(inputz[0]) == 2:
+                generos = input("Introduzca los generos: ")
+
+            else:
+                sys.exit(0)
+        sys.exit(0)
     elif int(inputs[0]) == 7:
         print("\nCargando información de los videos ....")
     else:
