@@ -233,7 +233,7 @@ while True:
         valor_maxInstrumentalness = input('Inserte el valor máximo de Instrumentalness: ')
         print("\nCargando información de los videos ....")
         respuesta = requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
-        organizar_req3(respuesta)
+        organizar_req3(respuesta[0])
     elif int(inputs[0]) == 6:
         while True:
             inputz = input("Introduzca 0 si quiere salir, 1 si quiere buscar un nuevo genero o 2 si quiere buscar algun genero existente: ")

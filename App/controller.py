@@ -116,6 +116,7 @@ def requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, va
     """
     Obtiene la informacion del requerimiento 3
     """
+    
     return model.musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
 
 #requerimiento 4
@@ -131,3 +132,31 @@ def requerimiento4NewGenero(tempomin, tempomax, catalog):
 #requerimiento 5
 
 
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return float(time.perf_counter()*1000)
+
+
+def getMemory():
+    """
+    toma una muestra de la memoria alocada en instante de tiempo
+    """
+    return tracemalloc.take_snapshot()
+
+
+def deltaMemory(start_memory, stop_memory):
+    """
+    calcula la diferencia en memoria alocada del programa entre dos
+    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    """
+    memory_diff = stop_memory.compare_to(start_memory, "filename")
+    delta_memory = 0.0
+
+    # suma de las diferencias en uso de memoria
+    for stat in memory_diff:
+        delta_memory = delta_memory + stat.size_diff
+    # de Byte -> kByte
+    delta_memory = delta_memory/1024.0
+    return delta_memory
