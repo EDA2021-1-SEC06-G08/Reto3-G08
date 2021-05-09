@@ -23,6 +23,8 @@
 import config as cf
 import model
 import csv
+import time
+import tracemalloc
 
 
 """
@@ -133,3 +135,5 @@ def requerimiento4(catalog, generos):
     
 
 #requerimiento 5
+
+
