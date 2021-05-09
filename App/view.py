@@ -175,7 +175,7 @@ def organizar_req3(lista):
     """
     Organiza el total y el valor de informacion de la musica
     """
-    print('Total of unique tracks in events: ' + str(lt.size(lista[1])))
+#   print('Total of unique tracks in events: ' + str(lt.size(lista[1])))
     i = 1
     while i <= 5:
         intRandom = random.randint(0, int(lt.size(lista[0]))-1)
@@ -186,17 +186,17 @@ def organizar_req3(lista):
 
 #requerimiento 4
 
-def requerimiento4NewGenero(tempomin, tempomax, catalog):
+#def requerimiento4NewGenero(tempomin, tempomax, catalog):
     """
     Da una tupla que contiene la cantidad de reproducciones para el genero y la lista con los autores
     """
-    return controller.requerimiento4NewGenero(tempomin, tempomax, catalog)
+    #return controller.requerimiento4NewGenero(tempomin, tempomax, catalog)
 
-def requerimiento4(catalog, generos):
+#def requerimiento4(catalog, generos):
     """
     Regresa en modo print la informacion
     """
-    return controller.requerimiento4(catalog, generos)
+    #return controller.requerimiento4(catalog, generos)
 #requerimiento 5
 
 catalog = None
@@ -214,31 +214,39 @@ while True:
     elif int(inputs[0]) == 2: #Da los resultados de la parte 2 del desarrollo
         print("\nCargando información de los videos ....")
         desarrollo(catalog)
-    elif int(inputs[0]) == 3:
+    elif int(inputs[0]) == 3: #requerimiento 1
         caracteristica = input('Inserte la característica: ')
         valor_min = input('Inserte el valor mínimo: ')
         valor_max = input('Inserte el valor máximo: ')
         print("\nCargando información de los videos ....")
         respuesta = requerimiento1(caracteristica, valor_min, valor_max, catalog)
         print(str(caracteristica) + ' ' + 'is between' + ' ' + str(valor_min) + ' ' + 'and' + ' ' + str(valor_max))
-        print('Total of reproduction: ' + str(respuesta[0]) + ' ' + 'Total of unique artists: ' + str(respuesta[1]))
-    elif int(inputs[0]) == 4:
+        print('Total of reproduction: ' + str(respuesta[0][0]) + ' ' + 'Total of unique artists: ' + str(respuesta[0][1]))
+        print("Tiempo [ms]: ", f"{respuesta[1]:.3f}", "  ||  ",
+                "Memoria [kB]: ", f"{respuesta[2]:.3f}")
+    elif int(inputs[0]) == 4: #requerimiento 2 
         valor_minEnergy = input('Inserte el valor mínimo de Energy: ')
         valor_maxEnergy = input('Inserte el valor máximo de Energy: ')
         valor_minDanceability = input('Inserte el valor mínimo de Danceability: ')
         valor_maxDanceability = input('Inserte el valor máximo de Danceability: ')
         print("\nCargando información de los videos ....")
         respuesta = requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
-        print('Total of unique tracks in events: ' + str(lt.size(respuesta[0])))
-        organizar_req2(respuesta[1])
-    elif int(inputs[0]) == 5:
+        print('Total of unique tracks in events: ' + str(lt.size(respuesta[0][0])))
+        organizar_req2(respuesta[0][1])
+        print("Tiempo [ms]: ", f"{respuesta[1]:.3f}", "  ||  ",
+                "Memoria [kB]: ", f"{respuesta[2]:.3f}")
+
+    elif int(inputs[0]) == 5: #requerimiento 3 
         valor_minTempo = input('Inserte el valor mínimo de Tempo: ')
         valor_maxTempo = input('Inserte el valor máximo de Tempo: ')
         valor_minInstrumentalness = input('Inserte el valor mínimo de Instrumentalness: ')
         valor_maxInstrumentalness = input('Inserte el valor máximo de Instrumentalness: ')
         print("\nCargando información de los videos ....")
         respuesta = requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
-        organizar_req3(respuesta[0])
+        print('Total of unique tracks in events: ' + str(lt.size(respuesta[0][1])))
+        organizar_req3(respuesta[0])6
+        print("Tiempo [ms]: ", f"{respuesta[1]:.3f}", "  ||  ",
+                "Memoria [kB]: ", f"{respuesta[2]:.3f}")
     elif int(inputs[0]) == 6:
         while True:
             inputz = input("Introduzca 0 si quiere salir, 1 si quiere buscar un nuevo genero o 2 si quiere buscar algun genero existente: ")
@@ -247,18 +255,23 @@ while True:
                 valor_min = input("Introduzca el tempo minimo: ")
                 valor_max = input("Introduzca el tempo maximo: ")
                 print("\nCargando información de los videos ....")
-                respuesta = requerimiento4NewGenero(valor_min, valor_max, catalog)
+                respuesta = controller.requerimiento4NewGenero(valor_min, valor_max, catalog)
                 print(str(genero) + ' is between ' + str(valor_min) + ' and ' + str(valor_max))
-                print('Total of reproduction: ' + str(lt.size(respuesta[0])) + ' Total of unique artists: ' + str(lt.size(respuesta[1])))
+                print('Total of reproduction: ' + str(lt.size(respuesta[0][0])) + ' Total of unique artists: ' + str(lt.size(respuesta[0][1])))
                 print('---------------  Some artists for ' + str(genero) + ' -----------')
                 i = 0
                 while i <= 9:
-                    print('Artist ' + str(i) + ': ' + lt.getElement(respuesta[1], i))
+                    print('Artist ' + str(i) + ': ' + lt.getElement(respuesta[0][1], i))
                     i += 1
+                print("Tiempo [ms]: ", f"{respuesta[1]:.3f}", "  ||  ",
+                "Memoria [kB]: ", f"{respuesta[2]:.3f}")
             elif int(inputz[0]) == 2:
                 generos = input("Introduzca los generos pegados y separado por comas: ")
                 print("\nCargando información de los videos ....")
-                requerimiento4(catalog, generos)
+                respuesta = controller.requerimiento4(catalog, generos)
+                #requerimiento4(catalog, generos)
+                print("Tiempo [ms]: ", f"{respuesta[1]:.3f}", "  ||  ",
+                "Memoria [kB]: ", f"{respuesta[2]:.3f}")
             else:
                 sys.exit(0)
     elif int(inputs[0]) == 7:

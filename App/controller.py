@@ -100,7 +100,22 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     """
     Obtiene la informacion del requerimiento 1
     """
-    return model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+    respuesta = model.carac_reproducciones(caracteristica, valor_min, valor_max, catalog)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return respuesta, delta_time, delta_memory
 
 #requerimiento 2 
 
@@ -108,7 +123,22 @@ def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valo
     """
     Obtiene la informacion del requerimiento 2
     """
-    return model.musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+
+    respuesta = model.musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_maxDanceability, catalog)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+    return respuesta, delta_time, delta_memory
 
 #requerimiento 3
 
@@ -116,8 +146,22 @@ def requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, va
     """
     Obtiene la informacion del requerimiento 3
     """
-    
-    return model.musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+
+    respuesta = model.musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+    return respuesta, delta_time, delta_memory
 
 #requerimiento 4
 
@@ -125,15 +169,46 @@ def requerimiento4NewGenero(tempomin, tempomax, catalog):
     """
     Da el resultado para un genero nuevo
     """
-    return model.buscar_Newgenero(tempomin, tempomax, catalog)
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+    
+    respuesta = model.buscar_Newgenero(tempomin, tempomax, catalog)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return respuesta, delta_time, delta_memory
 
 def requerimiento4(catalog, generos):
     """
     Da el resultado para los generos existentes
     """
-    return model.generos_existentes(catalog, generos)
+    delta_time = -1.0
+    delta_memory = -1.0
 
-    
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+
+    respuesta = model.generos_existentes(catalog, generos)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+
+    return respuesta, delta_time, delta_memory
+
 
 #requerimiento 5
 
