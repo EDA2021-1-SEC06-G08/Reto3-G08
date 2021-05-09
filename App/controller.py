@@ -112,7 +112,21 @@ def requerimiento2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valo
 
 #requerimiento 3
 
+def requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog):
+    """
+    Obtiene la informacion del requerimiento 3
+    """
+    return model.musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
+
 #requerimiento 4
+
+def requerimiento4NewGenero(tempomin, tempomax, catalog):
+    """
+    Introduce un genero a la tabla de generos
+    """
+    return model.buscar_Newgenero(tempomin, tempomax, catalog)
+
+    
 
 #requerimiento 5
 

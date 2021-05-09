@@ -287,9 +287,10 @@ def CrearLlaveMusicaGenero(catalog):
 
 def addMapMusicaGenero(catalog, musica):
     """
-    Agrega los RBT de la tabla de hash de los generos
+    Agrega las listas a la tabla de hash de los generos
     """
     #Reggae
+
     RBTreggaeEntry = mp.get(catalog['musicaGenero'], 'Reggae')
     RBTreggae = me.getValue(RBTreggaeEntry)        
     EstaKey = om.contains(RBTreggae, musica['tempo'])
@@ -310,6 +311,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Reggae', RBTreggae)
     
     #Down-tempo
+
     RBTdown_tempoEntry = mp.get(catalog['musicaGenero'], 'Down-tempo')
     RBTdown_tempo = me.getValue(RBTdown_tempoEntry)        
     EstaKey = om.contains(RBTdown_tempo, musica['tempo'])
@@ -330,6 +332,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Down-tempo', RBTdown_tempo)
     
     #Chill-out
+
     RBTchill_outEntry = mp.get(catalog['musicaGenero'], 'Chill-out')
     RBTchill_out = me.getValue(RBTchill_outEntry)        
     EstaKey = om.contains(RBTchill_out, musica['tempo'])
@@ -350,6 +353,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Chill-out', RBTchill_out)
 
     #Hip-hop
+
     RBThip_hopEntry = mp.get(catalog['musicaGenero'], 'Hip-hop')
     RBThip_hop = me.getValue(RBThip_hopEntry)        
     EstaKey = om.contains(RBThip_hop, musica['tempo'])
@@ -370,6 +374,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Hip-hop', RBThip_hop)
     
     #Jazz and Funk 
+
     RBTjazzandfunkEntry = mp.get(catalog['musicaGenero'], 'Jazz and Funk')
     RBTjazzandfunk = me.getValue(RBTjazzandfunkEntry)        
     EstaKey = om.contains(RBTjazzandfunk, musica['tempo'])
@@ -390,6 +395,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Jazz and Funk', RBTjazzandfunk)
     
     #Pop
+
     RBTpopEntry = mp.get(catalog['musicaGenero'], 'Pop')
     RBTpop = me.getValue(RBTpopEntry)        
     EstaKey = om.contains(RBTpop, musica['tempo'])
@@ -410,6 +416,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Pop', RBTpop)
     
     #R&B
+
     RBTrandbEntry = mp.get(catalog['musicaGenero'], 'R&B')
     RBTrandb = me.getValue(RBTrandbEntry)   
 
@@ -430,6 +437,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'R&B', RBTrandb)
 
     #Rock
+
     RBTrockEntry = mp.get(catalog['musicaGenero'], 'Rock')
     RBTrock = me.getValue(RBTrockEntry)  
 
@@ -450,6 +458,7 @@ def addMapMusicaGenero(catalog, musica):
         mp.put(catalog['musicaGenero'], 'Rock', RBTrock)
 
     #Metal
+
     RBTmetalEntry = mp.get(catalog['musicaGenero'], 'Metal')
     RBTmetal = me.getValue(RBTmetalEntry)   
 
@@ -545,10 +554,54 @@ def musica_req2(valor_minEnergy, valor_maxEnergy, valor_minDanceability, valor_m
                     lt.addLast(canciones, dato)
     return tracksUnicos, canciones
     
-
 #requerimiento 3
 
+def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog):
+    """
+    Retorna una lista con las canciones 
+    """
+    tracksUnicos = lt.newList('ARRAY_LIST')
+    canciones = lt.newList('ARRAY_LIST')
+    MapInstrumentalness = mp.get(catalog['caraContenido'], 'instrumentalness')
+    RBTInstrumentalness = me.getValue(MapInstrumentalness)
+    lista_listas_Instrumentalness = om.values(RBTInstrumentalness, valor_minInstrumentalness, valor_maxInstrumentalness)               
+    lista_Instrumentalness = it.newIterator(lista_listas_Instrumentalness)
+    while it.hasNext(lista_Instrumentalness):
+        listas_musica = it.next(lista_Instrumentalness) 
+        musicas = it.newIterator(listas_musica)
+        while it.hasNext(musicas):
+            musica = it.next(musicas)
+            if (musica['tempo'] >= valor_minTempo and musica['tempo'] <= valor_maxTempo):
+                if int(lt.isPresent(tracksUnicos, musica['track_id'])) == 0:
+                    lt.addLast(tracksUnicos, musica['track_id'])
+                    lt.addLast(canciones, musica)
+                else:
+                    lt.addLast(canciones, musica)
+    return canciones,tracksUnicos
+
 #requerimiento 4
+
+def buscar_Newgenero(tempomin, tempomax, catalog):
+    """
+    retorna una tupla con la lista de los autores y la cantidad de reproducciones
+    """
+    artistasNoRepetidos = lt.newList('ARRAY_LIST')
+    artistasRepetidos = lt.newList('ARRAY_LIST')
+    MapCaracteristicas = mp.get(catalog['caraContenido'], 'tempo')
+    RBTcaracteristica = me.getValue(MapCaracteristicas)
+    lista_listas_musica = om.values(RBTcaracteristica, tempomin, tempomax)
+    lista_lista_musica = it.newIterator(lista_listas_musica)
+    while it.hasNext(lista_lista_musica):  
+        lista_musica = it.next(lista_lista_musica)
+        musicas = it.newIterator(lista_musica)
+        while it.hasNext(musicas):
+            musica = it.next(musicas)
+            if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+               lt.addLast(artistasNoRepetidos, musica['artist_id'])
+               lt.addLast(artistasRepetidos, musica)
+            else:
+                lt.addLast(artistasRepetidos, musica)
+    return artistasRepetidos, artistasNoRepetidos
 
 #requerimiento 5
 
