@@ -523,9 +523,11 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
             musica = it.next(musicas) #iterar sobre esta lista por artist_id
             if int(lt.isPresent(artistasNoRepetidos, (musica['artist_id']))) == 0:
                lt.addLast(artistasNoRepetidos, musica['artist_id'])
-               lt.addLast(artistasRepetidos, musica['artist_id'])
+               if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                   lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
             else:
-                lt.addLast(artistasRepetidos, musica['artist_id'])
+                if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                   lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
     return lt.size(artistasRepetidos), lt.size(artistasNoRepetidos)
 
 #requerimiento 2 
@@ -574,9 +576,11 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
             if (musica['tempo'] >= valor_minTempo and musica['tempo'] <= valor_maxTempo):
                 if int(lt.isPresent(tracksUnicos, musica['track_id'])) == 0:
                     lt.addLast(tracksUnicos, musica['track_id'])
-                    lt.addLast(canciones, musica)
-                else:
-                    lt.addLast(canciones, musica)
+                    if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                        lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+            else:
+                if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                   lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
     return canciones,tracksUnicos
 
 #requerimiento 4
@@ -596,11 +600,14 @@ def buscar_Newgenero(tempomin, tempomax, catalog):
         musicas = it.newIterator(lista_musica)
         while it.hasNext(musicas):
             musica = it.next(musicas)
-            if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
+            if int(lt.isPresent(artistasNoRepetidos, (musica['artist_id']))) == 0:
                lt.addLast(artistasNoRepetidos, musica['artist_id'])
-               lt.addLast(artistasRepetidos, musica)
+               if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                   lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
             else:
-                lt.addLast(artistasRepetidos, musica)
+                if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                   lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+            
     return artistasRepetidos, artistasNoRepetidos
 
 def generos_existentes(catalog, generos):
@@ -625,11 +632,16 @@ def generos_existentes(catalog, generos):
                 musica = it.next(musicas)
                 if int(lt.isPresent(artistasNoRepetidos, musica['artist_id'])) == 0:
                     lt.addLast(artistasNoRepetidos, musica['artist_id'])
-                    lt.addLast(artistasRepetidos, musica)
-                    lt.addLast(lista_repetidos_total, musica)
+                    if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                        lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                        if int(lt.isPresent(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                            lt.addLast(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))
                 else:
-                    lt.addLast(artistasRepetidos, musica)
-                    lt.addLast(lista_repetidos_total, musica)
+                    if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                        lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                        if int(lt.isPresent(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                            lt.addLast(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+            
         print(str(genero) + ' is between ' + str(valor_min) + ' and ' + str(valor_max))
         print('Total of reproduction: ' + str(lt.size(artistasRepetidos)) + ' Total of unique artists: ' + str(lt.size(artistasNoRepetidos)))                
         print('---------------  Some artists for ' + str(genero) + ' -----------')
@@ -637,7 +649,7 @@ def generos_existentes(catalog, generos):
         while i <= 9:
             print('Artist ' + str(i) + ': ' + lt.getElement(artistasNoRepetidos, i))
             i += 1
-    print(lt.size(lista_repetidos_total))
+    print('Total of reproduction is ' + str(lt.size(lista_repetidos_total)))
 
 #requerimiento 5
 
