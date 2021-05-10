@@ -564,6 +564,7 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
     """
     tracksUnicos = lt.newList('ARRAY_LIST')
     canciones = lt.newList('ARRAY_LIST')
+    artistasRepetidos = lt.newList('ARRAY_LIST')
     MapInstrumentalness = mp.get(catalog['caraContenido'], 'instrumentalness')
     RBTInstrumentalness = me.getValue(MapInstrumentalness)
     lista_listas_Instrumentalness = om.values(RBTInstrumentalness, valor_minInstrumentalness, valor_maxInstrumentalness)               
@@ -578,9 +579,11 @@ def musica_req3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor
                     lt.addLast(tracksUnicos, musica['track_id'])
                     if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
                         lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                        lt.addLast(canciones, musica)
             else:
                 if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
                    lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                   lt.addLast(canciones, musica)
     return canciones,tracksUnicos
 
 #requerimiento 4
