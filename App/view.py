@@ -244,7 +244,7 @@ while True:
         print("\nCargando información de los videos ....")
         respuesta = requerimiento3(valor_minTempo, valor_maxTempo, valor_minInstrumentalness, valor_maxInstrumentalness, catalog)
         print('Total of unique tracks in events: ' + str(lt.size(respuesta[0][1])))
-        organizar_req3(respuesta[0])6
+        organizar_req3(respuesta[0])
         print("Tiempo [ms]: ", f"{respuesta[1]:.3f}", "  ||  ",
                 "Memoria [kB]: ", f"{respuesta[2]:.3f}")
     elif int(inputs[0]) == 6:
