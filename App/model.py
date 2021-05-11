@@ -483,20 +483,23 @@ def addMapMusicaFechas(catalog, musica):
     """
     Reliza un RBT por fechas que contiene la musica en este periodo
     """
-    EstaKey = om.contains(catalog['fechaMusica'], musica['created_at'])
+    fecha = musica['created_at']
+    fecha = fecha[11:]
+
+    EstaKey = om.contains(catalog['fechaMusica'], fecha)
     if not(EstaKey):
         ArtistList = lt.newList('ARRAY_LIST')
-        om.put(catalog['fechaMusica'], musica['created_at'], ArtistList)
-        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['created_at'])
+        om.put(catalog['fechaMusica'], fecha, ArtistList)
+        ListaArtistaEntry = om.get(catalog['fechaMusica'], fecha)
         ListaArtista = me.getValue(ListaArtistaEntry)
         lt.addLast(ListaArtista, musica)
-        om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)
+        om.put(catalog['fechaMusica'], fecha, ListaArtista)
 
     else:
-        ListaArtistaEntry = om.get(catalog['fechaMusica'], musica['created_at'])
+        ListaArtistaEntry = om.get(catalog['fechaMusica'], fecha)
         ListaArtista = me.getValue(ListaArtistaEntry)
         lt.addLast(ListaArtista, musica)
-        om.put(catalog['fechaMusica'], musica['created_at'], ListaArtista)
+        om.put(catalog['fechaMusica'], fecha, ListaArtista)
 
 
 #================================
@@ -637,13 +640,13 @@ def generos_existentes(catalog, generos):
                     lt.addLast(artistasNoRepetidos, musica['artist_id'])
                     if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
                         lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
-                        if int(lt.isPresent(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
-                            lt.addLast(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                        #if int(lt.isPresent(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                         #   lt.addLast(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))
                 else:
                     if int(lt.isPresent(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
                         lt.addLast(artistasRepetidos, (musica['created_at'] + musica['user_id'] + musica['track_id']))
-                        if int(lt.isPresent(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
-                            lt.addLast(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                        #if int(lt.isPresent(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))) == 0:
+                         #   lt.addLast(lista_repetidos_total, (musica['created_at'] + musica['user_id'] + musica['track_id']))
             
         print(str(genero) + ' is between ' + str(valor_min) + ' and ' + str(valor_max))
         print('Total of reproduction: ' + str(lt.size(artistasRepetidos)) + ' Total of unique artists: ' + str(lt.size(artistasNoRepetidos)))                
@@ -655,6 +658,40 @@ def generos_existentes(catalog, generos):
     print('Total of reproduction is ' + str(lt.size(lista_repetidos_total)))
 
 #requerimiento 5
+
+def genero_escuchados(catalog, valor_minHora, valor_maxHora):
+    """
+    """
+    total_reproducciones = lt.newList('ARRAY_LIST')
+    generos = mp.keySet(catalog['musicaGenero'])
+    iteratorgenero = it.newIterator(generos)
+    while it.hasNext(iteratorgenero):
+        genero = it.next(iteratorgenero)
+        cantidad_genero = lt.newList('ARRAY_LIST')
+        MapGeneros = mp.get(catalog['musicaGenero'], genero)
+        RBTgenero = me.getValue(MapGeneros)
+        valor_min = om.minKey(RBTgenero)
+        valor_max = om.maxKey(RBTgenero)
+        lista_listas_musica = om.values(RBTgenero, valor_min, valor_max)
+        lista_lista_musica = it.newIterator(lista_listas_musica)
+        while it.hasNext(lista_lista_musica):  
+            lista_musica = it.next(lista_lista_musica)
+            musicas = it.newIterator(lista_musica)
+            while it.hasNext(musicas):
+                musica = it.next(musicas)
+                fecha = musica['created_at']
+                fecha = fecha[11:]
+                if fecha >= valor_minHora and fecha <= valor_maxHora:
+                    lt.addLast(cantidad_genero, musica)
+                    lt.addLast(total_reproducciones, musica)
+                    
+    print('Total of repruductions between ' + valor_minHora + ' and ' + valor_maxHora + ' is ' + lt.size(total_reproducciones))
+
+
+
+            
+
+
 
 
 
