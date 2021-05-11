@@ -684,13 +684,18 @@ def genero_escuchados(catalog, valor_minHora, valor_maxHora):
                 fecha = musica['created_at']
                 fecha = fecha[11:]
                 if fecha >= valor_minHora and fecha <= valor_maxHora:
-                    lt.addLast(cantidad_genero, musica)
-                    lt.addLast(total_reproducciones, musica)
+                    if lt.isPresent(cantidad_genero, (musica['created_at'] + musica['user_id'] + musica['track_id'])) == 0:
+                        lt.addLast(cantidad_genero, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                        if lt.isPresent(total_reproducciones, (musica['created_at'] + musica['user_id'] + musica['track_id'])):
+                            lt.addLast(total_reproducciones, (musica['created_at'] + musica['user_id'] + musica['track_id']))
+                    else:
+                        if lt.isPresent(total_reproducciones, (musica['created_at'] + musica['user_id'] + musica['track_id'])):
+                            lt.addLast(total_reproducciones, (musica['created_at'] + musica['user_id'] + musica['track_id']))
         lt.addLast(lista_listas_reproducciones, (genero, lt.size(cantidad_genero)))
     print('Total of repruductions between ' + valor_minHora + ' and ' + valor_maxHora + ' is ' + str(lt.size(total_reproducciones)))
     sa.sort(lista_listas_reproducciones, cmptamanio)
     print('================= GENRES SORTED REPRODUCTIONS ===============')
-    i = 0
+    i = 1
     while i <= lt.size(lista_listas_reproducciones):
         print('TOP ' + str(i) + ': ' + str(lt.getElement(lista_listas_reproducciones, i)[0]) + ' with ' + str(lt.getElement(lista_listas_reproducciones, i)[1]) + ' reps')
         i += 1
