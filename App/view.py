@@ -20,7 +20,6 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from App.controller import requerimiento5
 import random
 import config as cf
 import sys
@@ -201,7 +200,7 @@ def requerimiento4(catalog, generos):
 
 #requerimiento 5
 
-def requerimeinto5(catalog, valor_minHora, valor_maxHora):
+def requerimiento5(catalog, valor_minHora, valor_maxHora):
     """
     """
     return controller.requerimiento5(catalog, valor_minHora, valor_maxHora)
@@ -272,7 +271,7 @@ while True:
 
             else:
                 sys.exit(0)
-                
+
     elif int(inputs[0]) == 7:
         valor_minHora = input('Ingrese la fecha hh:mm:ss minima de busqueda')
         valor_maxHora = input('Ingrese la fecha hh:mm:ss maxima de busqueda')
