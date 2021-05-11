@@ -250,6 +250,7 @@ while True:
                 valor_max = input("Introduzca el tempo maximo: ")
                 print("\nCargando información de los videos ....")
                 respuesta = requerimiento4NewGenero(valor_min, valor_max, catalog)
+                #respuesta = controller.requerimiento4NewGenero(valor_min, valor_max, catalog)
                 print(str(genero) + ' is between ' + str(valor_min) + ' and ' + str(valor_max))
                 print('Total of reproduction: ' + str(lt.size(respuesta[0])) + ' Total of unique artists: ' + str(lt.size(respuesta[1])))
                 print('---------------  Some artists for ' + str(genero) + ' -----------')

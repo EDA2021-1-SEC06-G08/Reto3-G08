@@ -128,45 +128,17 @@ def requerimiento4NewGenero(tempomin, tempomax, catalog):
     """
     Da el resultado para un genero nuevo
     """
-    delta_time = -1.0
-    delta_memory = -1.0
-
-    tracemalloc.start()
-    start_time = getTime()
-    start_memory = getMemory()
-    
-    respuesta = model.buscar_Newgenero(tempomin, tempomax, catalog)
-
-    stop_memory = getMemory()
-    stop_time = getTime()
-    tracemalloc.stop()
-
-    delta_time = stop_time - start_time
-    delta_memory = deltaMemory(start_memory, stop_memory)
-
-    return respuesta, delta_time, delta_memory
+   
+    return model.buscar_Newgenero(tempomin, tempomax, catalog)
 
 def requerimiento4(catalog, generos):
     """
     Da el resultado para los generos existentes
     """
-    delta_time = -1.0
-    delta_memory = -1.0
+    
 
-    tracemalloc.start()
-    start_time = getTime()
-    start_memory = getMemory()
+    return model.generos_existentes(catalog, generos)
 
-    respuesta = model.generos_existentes(catalog, generos)
-
-    stop_memory = getMemory()
-    stop_time = getTime()
-    tracemalloc.stop()
-
-    delta_time = stop_time - start_time
-    delta_memory = deltaMemory(start_memory, stop_memory)
-
-    return respuesta, delta_time, delta_memory
 
 
 #requerimiento 5
