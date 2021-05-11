@@ -521,7 +521,7 @@ def carac_reproducciones(caracteristica, valor_min, valor_max, catalog):
     lista_listas_musica = om.values(RBTcaracteristica, valor_min, valor_max)
     lista_lista_musica = it.newIterator(lista_listas_musica)
     while it.hasNext(lista_lista_musica):  
-        lista_musica = it.next(lista_lista_musica)#lista_musica es una lista que tengo que recorrer 
+        lista_musica = it.next(lista_lista_musica)#lista_musica es un dicc de listas que tengo que recorrer 
         musicas = it.newIterator(lista_musica)
         while it.hasNext(musicas):
             musica = it.next(musicas) #iterar sobre esta lista por artist_id
