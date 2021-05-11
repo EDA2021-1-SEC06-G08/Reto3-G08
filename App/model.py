@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.ADT.indexminpq import size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
@@ -663,6 +664,7 @@ def genero_escuchados(catalog, valor_minHora, valor_maxHora):
     """
     """
     total_reproducciones = lt.newList('ARRAY_LIST')
+    lista_listas_reproducciones = lt.newList('ARRAY_LIST')
     generos = mp.keySet(catalog['musicaGenero'])
     iteratorgenero = it.newIterator(generos)
     while it.hasNext(iteratorgenero):
@@ -684,15 +686,14 @@ def genero_escuchados(catalog, valor_minHora, valor_maxHora):
                 if fecha >= valor_minHora and fecha <= valor_maxHora:
                     lt.addLast(cantidad_genero, musica)
                     lt.addLast(total_reproducciones, musica)
-                    
-    print('Total of repruductions between ' + valor_minHora + ' and ' + valor_maxHora + ' is ' + lt.size(total_reproducciones))
-
-
-
-            
-
-
-
+        lt.addLast(lista_listas_reproducciones, (genero, lt.size(cantidad_genero)))
+    print('Total of repruductions between ' + valor_minHora + ' and ' + valor_maxHora + ' is ' + str(lt.size(total_reproducciones)))
+    sa.sort(lista_listas_reproducciones, cmptamanio)
+    print('================= GENRES SORTED REPRODUCTIONS ===============')
+    i = 0
+    while i <= lt.size(lista_listas_reproducciones):
+        print('TOP ' + str(i) + ': ' + str(lt.getElement(lista_listas_reproducciones, i)[0]) + ' with ' + str(lt.getElement(lista_listas_reproducciones, i)[1]) + ' reps')
+        i += 1
 
 
 # ========================
@@ -711,3 +712,10 @@ def compareIds(id1, id2):
     else:
         return -1
 
+def cmptamanio(lista1, lista2):
+    if lista1[1] == lista2[1]:
+        return 0
+    elif lista1[1] > lista2[1]:
+        return 1
+    else:
+        return -1
