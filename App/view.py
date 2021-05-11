@@ -273,8 +273,8 @@ while True:
                 sys.exit(0)
 
     elif int(inputs[0]) == 7:
-        valor_minHora = input('Ingrese la fecha hh:mm:ss minima de busqueda')
-        valor_maxHora = input('Ingrese la fecha hh:mm:ss maxima de busqueda')
+        valor_minHora = input('Ingrese la fecha hh:mm:ss minima de busqueda: ')
+        valor_maxHora = input('Ingrese la fecha hh:mm:ss maxima de busqueda: ')
         print("\nCargando información de los videos ....")
         requerimiento5(catalog, valor_minHora, valor_maxHora)
     else:
