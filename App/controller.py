@@ -170,8 +170,8 @@ def requerimiento4(catalog, generos):
 
 
 #requerimiento 5
-def requerimiento5(catalog, valor_minhora, valor_maxhora):
-    return model.genero_escuchados(atalog, valor_minhora, valor_maxhora) 
+def requerimiento5(catalog, valor_minHora, valor_maxHora):
+    return model.genero_escuchados(catalog, valor_minHora, valor_maxHora) 
 
 
 def getTime():
