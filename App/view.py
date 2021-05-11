@@ -197,7 +197,13 @@ def requerimiento4(catalog, generos):
     Regresa en modo print la informacion
     """
     return controller.requerimiento4(catalog, generos)
+
 #requerimiento 5
+
+def requerimiento5(catalog, valor_minHora, valor_maxHora):
+    """
+    """
+    return controller.requerimiento5(catalog, valor_minHora, valor_maxHora)
 
 catalog = None
 
@@ -263,13 +269,15 @@ while True:
                 generos = input("Introduzca los generos pegados y separado por comas: ")
                 print("\nCargando información de los videos ....")
                 requerimiento4(catalog, generos)
-               
+
             else:
                 sys.exit(0)
+
     elif int(inputs[0]) == 7:
         valor_minHora = input('Ingrese la fecha hh:mm:ss minima de busqueda')
         valor_maxHora = input('Ingrese la fecha hh:mm:ss maxima de busqueda')
         print("\nCargando información de los videos ....")
+        requerimiento5(catalog, valor_minHora, valor_maxHora)
     else:
         sys.exit(0)
 sys.exit(0)
