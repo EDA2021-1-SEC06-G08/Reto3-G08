@@ -268,8 +268,8 @@ while True:
             elif int(inputz[0]) == 2:
                 generos = input("Introduzca los generos pegados y separado por comas: ")
                 print("\nCargando información de los videos ....")
-                requerimiento4(catalog, generos)
-
+                respuesta = controller.requerimiento4(catalog, generos)
+                print(respuesta)
             else:
                 sys.exit(0)
 
